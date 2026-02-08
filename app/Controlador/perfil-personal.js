@@ -84,7 +84,7 @@ function marcarTemaActivo() {
 function verificarSesion() {
     const usuario = localStorage.getItem('usuario_logueado');
     if (!usuario) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
     
@@ -332,7 +332,7 @@ function activar2FA() {
 
 function cerrarSesion() {
     localStorage.removeItem('usuario_logueado');
-    window.location.href = 'catalogo.php';
+    window.location.href = 'catalogo.html';
 }
 
 function mostrarToast(mensaje) {

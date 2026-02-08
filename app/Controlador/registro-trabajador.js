@@ -72,7 +72,7 @@ function validarRegistroTrabajador(event) {
         localStorage.setItem('usuarios_registrados', JSON.stringify(usuarios));
         
         alert('Trabajador registrado exitosamente');
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
     }
     return false;
 }

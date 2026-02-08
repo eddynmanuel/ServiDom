@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function verificarSesion() {
     const usuario = localStorage.getItem('usuario_logueado');
     if (!usuario) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
     
@@ -592,7 +592,7 @@ document.addEventListener('click', function(e) {
 function contactarTrabajador(id) {
     const t = datosOriginales.find(x => x.id === id);
     if (!t) return;
-    window.location.href = `chat.php?contacto=${id}`;
+    window.location.href = `chat.html?contacto=${id}`;
 }
 
 function debounce(func, wait) {
@@ -606,7 +606,7 @@ function debounce(func, wait) {
 function cerrarSesion() {
     localStorage.removeItem('usuario_logueado');
     localStorage.removeItem('tipo_usuario');
-    window.location.href = 'login.php';
+    window.location.href = 'login.html';
 }
 
 function configurarDropdowns() {

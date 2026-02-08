@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function verificarSesion() {
     const usuario = localStorage.getItem('usuario_logueado');
     if (!usuario) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
     

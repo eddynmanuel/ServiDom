@@ -35,14 +35,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function verificarAdmin() {
     const usuario = localStorage.getItem('usuario_logueado');
     if (!usuario) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
     const datos = JSON.parse(usuario);
     // Solo admin puede acceder
     if (datos.email !== 'admin@servidom.com') {
         alert('Acceso denegado. Solo administradores pueden acceder.');
-        window.location.href = 'catalogo-auth.php';
+        window.location.href = 'catalogo-auth.html';
         return;
     }
     document.getElementById('admin-nombre').textContent = datos.nombre;
@@ -231,5 +231,5 @@ function rechazarSolicitud(id) {
 
 function cerrarSesionAdmin() {
     localStorage.removeItem('usuario_logueado');
-    window.location.href = 'catalogo.php';
+    window.location.href = 'catalogo.html';
 }

@@ -39,14 +39,14 @@ function cargarAnuncios() {
 function intentarPostular(anuncioId) {
     // Mostrar aviso de que debe registrarse o iniciar sesión
     if (confirm('Para postular a este empleo debes registrarte o iniciar sesión.\n\n¿Deseas ir a la página de inicio de sesión?')) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
     }
 }
 
 function abrirCategoria(categoria) {
-    // Guardar categoría seleccionada y redirigir a trabajadores.php
+    // Guardar categoría seleccionada y redirigir a trabajadores.html
     localStorage.setItem('categoria_seleccionada', categoria);
-    window.location.href = 'trabajadores.php?categoria=' + categoria;
+    window.location.href = 'trabajadores.html?categoria=' + categoria;
 }
 
 function abrirPagina(url) {

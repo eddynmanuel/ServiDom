@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function verificarSesion() {
     const usuario = localStorage.getItem('usuario_logueado');
     if (!usuario) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
     
@@ -182,11 +182,11 @@ function verPerfil(id, categoria) {
     const trabajador = trabajadores.find(t => t.id === id);
     if (trabajador) {
         localStorage.setItem('trabajador_seleccionado', JSON.stringify(trabajador));
-        window.location.href = 'perfil.php?id=' + id + '&categoria=' + categoria;
+        window.location.href = 'perfil.html?id=' + id + '&categoria=' + categoria;
     }
 }
 
 function cerrarSesion() {
     localStorage.removeItem('usuario_logueado');
-    window.location.href = 'catalogo.php';
+    window.location.href = 'catalogo.html';
 }

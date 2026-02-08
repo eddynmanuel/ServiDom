@@ -29,9 +29,9 @@ function validarFormulario(event) {
         
         // Redirigir según tipo de usuario
         if (usuario.email === 'admin@servidom.com') {
-            window.location.href = "admin.php";
+            window.location.href = "admin.html";
         } else {
-            window.location.href = "catalogo-auth.php";
+            window.location.href = "catalogo-auth.html";
         }
     } else {
         errorDiv.innerText = "Correo o contraseña incorrectos.";

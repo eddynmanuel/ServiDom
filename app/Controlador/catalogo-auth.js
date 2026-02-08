@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function verificarSesion() {
     const usuario = localStorage.getItem('usuario_logueado');
     if (!usuario) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
     
@@ -187,7 +187,7 @@ function actualizarInterfazSegunTipo() {
 
 function abrirCategoria(categoria) {
     // Redirigir a la página de categoría con el parámetro
-    window.location.href = `categoria.php?cat=${categoria}`;
+    window.location.href = `categoria.html?cat=${categoria}`;
 }
 
 function mostrarTrabajadores(categoria) {
@@ -411,7 +411,7 @@ function verPerfilTrabajador(id) {
 function contactarTrabajador(id) {
     mostrarToastGlobal('Abriendo chat...');
     setTimeout(() => {
-        window.location.href = 'chat.php';
+        window.location.href = 'chat.html';
     }, 500);
 }
 

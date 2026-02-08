@@ -67,7 +67,7 @@ function validarRegistroCliente(event) {
         localStorage.setItem('usuarios_registrados', JSON.stringify(usuarios));
         
         alert('Cliente registrado exitosamente');
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
     }
     return false;
 }

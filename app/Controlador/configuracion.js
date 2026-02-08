@@ -120,7 +120,7 @@ function eliminarCuenta() {
         if (confirm('Esta es tu última oportunidad. ¿Realmente deseas eliminar tu cuenta permanentemente?')) {
             localStorage.removeItem('usuario_logueado');
             localStorage.removeItem('estado_usuario');
-            window.location.href = 'login.php';
+            window.location.href = 'login.html';
         }
     }
 }

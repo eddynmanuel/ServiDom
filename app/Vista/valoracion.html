@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categoría - ServiDom</title>
+    <title>Valorar Servicio - ServiDom</title>
     <link rel="stylesheet" href="../../public/css/catalogo-auth.css">
-    <link rel="stylesheet" href="../../public/css/categoria.css">
+    <link rel="stylesheet" href="../../public/css/valoracion.css">
 </head>
 <body>
     <!-- Header con navegación y perfil -->
@@ -21,20 +22,20 @@
             
             <!-- Navegación Principal -->
             <nav class="main-nav">
-                <a href="catalogo-auth.php" class="nav-item active">
+                <a href="catalogo-auth.html" class="nav-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
                     </svg>
                     <span>Inicio</span>
                 </a>
-                <a href="chat.php" class="nav-item">
+                <a href="chat.html" class="nav-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
                     <span>Mensajes</span>
                 </a>
-                <a href="explorar.php" class="nav-item">
+                <a href="explorar.html" class="nav-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -60,9 +61,7 @@
                         <h3>Notificaciones</h3>
                         <button onclick="marcarTodasLeidas()">Marcar leídas</button>
                     </div>
-                    <div class="notif-list" id="notif-list">
-                        <!-- Se cargan dinámicamente -->
-                    </div>
+                    <div class="notif-list" id="notif-list"></div>
                 </div>
             </div>
             
@@ -82,7 +81,7 @@
                 </button>
                 
                 <div class="dropdown-menu" id="dropdown">
-                    <a href="perfil-personal.php" class="dropdown-item">
+                    <a href="perfil-personal.html" class="dropdown-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
@@ -131,20 +130,20 @@
                     
                     <div class="dropdown-divider"></div>
                     
-                    <a href="empleos-guardados.php" class="dropdown-item">
+                    <a href="empleos-guardados.html" class="dropdown-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                         <span>Empleos Guardados</span>
                     </a>
-                    <a href="historial.php" class="dropdown-item">
+                    <a href="historial.html" class="dropdown-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                         </svg>
                         <span>Historial</span>
                     </a>
-                    <a href="configuracion.php" class="dropdown-item">
+                    <a href="configuracion.html" class="dropdown-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="3"></circle>
                             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -167,73 +166,47 @@
         </div>
     </header>
 
-    <main class="categoria-main">
-        <!-- Botón Volver -->
-        <a href="catalogo-auth.php" class="btn-volver">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Volver al catálogo
-        </a>
-
-        <!-- Header de categoría -->
-        <div class="categoria-header">
-            <div class="categoria-icon" id="categoria-icon"></div>
-            <div class="categoria-info">
-                <h1 id="categoria-titulo">Cargando...</h1>
-                <p id="categoria-descripcion">Cargando contenido...</p>
-            </div>
-        </div>
-
-        <!-- Barra de búsqueda y filtros -->
-        <div class="filtros-bar">
-            <div class="search-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" id="buscar" placeholder="Buscar...">
-            </div>
-            <div class="filtros-grupo">
-                <select id="filtro-orden">
-                    <option value="relevancia">Más relevantes</option>
-                    <option value="rating">Mejor valorados</option>
-                    <option value="precio-asc">Precio: menor a mayor</option>
-                    <option value="precio-desc">Precio: mayor a menor</option>
-                    <option value="reciente">Más recientes</option>
-                </select>
-                <div class="filtro-toggle" id="solo-disponibles">
-                    <input type="checkbox" id="check-disponibles" checked>
-                    <label for="check-disponibles">Solo disponibles</label>
+    <main class="main-content">
+        <div class="valoracion-card">
+            <div class="valoracion-header">
+                <div class="avatar-trabajador">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
                 </div>
+                <h2 id="nombre-trabajador">Nombre del Trabajador</h2>
+                <p class="ocupacion" id="ocupacion-trabajador">Ocupación</p>
             </div>
-        </div>
-
-        <!-- Contenedor principal de resultados -->
-        <div class="resultados-container">
-            <div class="resultados-count" id="resultados-count">Cargando...</div>
-            <div class="resultados-grid" id="resultados-grid">
-                <!-- Se llena dinámicamente -->
+            
+            <div class="valoracion-estrellas">
+                <h3>¿Cómo calificarías el servicio?</h3>
+                <div class="estrellas-container" id="estrellas-container">
+                    <span class="estrella" data-valor="1">★</span>
+                    <span class="estrella" data-valor="2">★</span>
+                    <span class="estrella" data-valor="3">★</span>
+                    <span class="estrella" data-valor="4">★</span>
+                    <span class="estrella" data-valor="5">★</span>
+                </div>
+                <p class="texto-valoracion" id="texto-valoracion">Selecciona una valoración</p>
             </div>
-            <div class="empty-state" id="empty-state" style="display: none;">
+            
+            <div class="valoracion-comentario">
+                <label for="comentario">Comentario (opcional)</label>
+                <textarea id="comentario" placeholder="Cuéntanos tu experiencia..."></textarea>
+            </div>
+            
+            <button class="btn-enviar-valoracion" onclick="enviarValoracion()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>
-                <h3>No hay resultados</h3>
-                <p id="empty-message">No se encontraron elementos en esta categoría.</p>
-            </div>
+                Enviar Valoración
+            </button>
         </div>
     </main>
-
-    <!-- Modal de detalle -->
-    <div class="modal-detalle" id="modal-detalle">
-        <div class="modal-content" id="modal-content">
-            <!-- Se llena dinámicamente -->
-        </div>
-    </div>
-
-    <script src="../Controlador/categoria.js"></script>
+    
+    <script src="../../public/js/tema-global.js"></script>
+    <script src="../Controlador/catalogo-auth.js"></script>
+    <script src="../Controlador/valoracion.js"></script>
 </body>
 </html>

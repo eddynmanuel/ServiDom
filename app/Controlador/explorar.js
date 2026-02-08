@@ -113,13 +113,13 @@ function verificarSesion() {
     const tipoUsuario = localStorage.getItem('tipo_usuario');
     
     if (!usuario) {
-        window.location.href = 'login.php';
+        window.location.href = 'login.html';
         return;
     }
     
     // Si es cliente, redirigir a catálogo
     if (tipoUsuario === 'cliente') {
-        window.location.href = 'catalogo-auth.php';
+        window.location.href = 'catalogo-auth.html';
         return;
     }
     
