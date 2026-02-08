@@ -1,0 +1,100 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('imagen/prueba.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.9); /* Transparencia */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="DNI"],
+input[type="tel"],
+input[type="password"],
+textarea {
+    width: calc(100% - 24px); /* Ajuste para el borde */
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.8); /* Transparencia */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="DNI"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border-color: #007bff;
+}
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    opacity: 0.9; /* Transparencia */
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Estilo para los nombres de los contenedores */
+.contenedor-nombre {
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.contenedor-nombre:hover {
+    color: #007bff; /* Cambia el color al hacer hover */
+}

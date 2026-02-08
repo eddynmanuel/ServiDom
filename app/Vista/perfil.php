@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Trabajador - ServiDom</title>
+    <link rel="stylesheet" href="../../public/css/catalogo-auth.css">
+    <link rel="stylesheet" href="../../public/css/perfil.css">
+</head>
+<body>
+    <!-- Header con navegación y perfil -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>ServiDom</span>
+            </div>
+            
+            <!-- Navegación Principal -->
+            <nav class="main-nav">
+                <a href="catalogo-auth.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Inicio</span>
+                </a>
+                <a href="chat.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Mensajes</span>
+                </a>
+                <a href="explorar.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span>Explorar</span>
+                </a>
+            </nav>
+        </div>
+        
+        <div class="header-actions">
+            <!-- Notificaciones -->
+            <div class="notif-container">
+                <button class="icon-btn" id="notif-btn" title="Notificaciones">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="notif-dropdown" id="notif-dropdown">
+                    <div class="notif-header">
+                        <h3>Notificaciones</h3>
+                        <button onclick="marcarTodasLeidas()">Marcar leídas</button>
+                    </div>
+                    <div class="notif-list" id="notif-list"></div>
+                </div>
+            </div>
+            
+            <!-- Perfil -->
+            <div class="perfil-container">
+                <button class="perfil-btn" id="perfil-btn">
+                    <div class="avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <span class="nombre-perfil" id="nombre-usuario">Usuario</span>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdown">
+                    <a href="perfil-personal.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Mi Perfil</span>
+                    </a>
+                    
+                    <!-- Selector de Tema Desplegable -->
+                    <div class="dropdown-submenu" id="tema-submenu">
+                        <div class="dropdown-item submenu-trigger" onclick="toggleTemaSubmenu(event)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                            </svg>
+                            <span>Cambiar Tema</span>
+                            <svg class="submenu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="submenu-content" id="submenu-tema">
+                            <button class="tema-option" data-tema="oscuro" onclick="cambiarTemaDropdown('oscuro')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                                <span>Oscuro</span>
+                            </button>
+                            <button class="tema-option" data-tema="claro" onclick="cambiarTemaDropdown('claro')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                </svg>
+                                <span>Claro</span>
+                            </button>
+                            <button class="tema-option" data-tema="auto" onclick="cambiarTemaDropdown('auto')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                                <span>Sistema</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <a href="empleos-guardados.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span>Empleos Guardados</span>
+                    </a>
+                    <a href="historial.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Historial</span>
+                    </a>
+                    <a href="configuracion.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span>Configuración</span>
+                    </a>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <a href="#" class="dropdown-item logout" onclick="cerrarSesion()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="perfil-layout">
+            <!-- Columna izquierda: Info principal -->
+            <div class="perfil-main">
+                <!-- Header con navegación y nombre -->
+                <div class="perfil-nav-header">
+                    <a href="javascript:history.back()" class="btn-volver-integrado">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Volver
+                    </a>
+                    <div class="breadcrumb">
+                        <a href="catalogo-auth.php">Catálogo</a>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <span>Perfil del trabajador</span>
+                    </div>
+                </div>
+                
+                <div class="perfil-card">
+                    <div class="perfil-header">
+                        <div class="avatar-wrapper">
+                            <div class="avatar-grande">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <span class="estado-indicator activo" id="estado-trabajador"></span>
+                        </div>
+                        <div class="perfil-info">
+                            <h1 id="nombre-trabajador">Carlos García</h1>
+                            <p class="ocupacion" id="ocupacion-trabajador">Carpintero Profesional</p>
+                            <div class="valoracion">
+                                <span class="estrellas">★★★★★</span>
+                                <span id="puntuacion">4.8</span>
+                                <span class="num-reviews">(127 reseñas)</span>
+                            </div>
+                            <div class="badges">
+                                <span class="badge verificado">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                    Verificado
+                                </span>
+                                <span class="badge destacado">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                    Destacado
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="perfil-stats">
+                        <div class="stat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                            <div>
+                                <span class="stat-value" id="experiencia-valor">5</span>
+                                <span class="stat-label">Años de experiencia</span>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            <div>
+                                <span class="stat-value">200+</span>
+                                <span class="stat-label">Trabajos completados</span>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <div>
+                                <span class="stat-value">24h</span>
+                                <span class="stat-label">Tiempo de respuesta</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="perfil-acciones">
+                        <a href="chat.php" class="btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            Enviar Mensaje
+                        </a>
+                        <a href="valoracion.php" class="btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            Valorar Servicio
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Sobre mí -->
+                <div class="seccion-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Sobre mí
+                    </h3>
+                    <p class="descripcion" id="descripcion-trabajador">
+                        Carpintero profesional con más de 5 años de experiencia en elaboración y reparación de muebles. 
+                        Especializado en trabajos de alta calidad con materiales premium. Comprometido con la satisfacción 
+                        del cliente y entregas puntuales. Trabajo con todo tipo de maderas y acabados.
+                    </p>
+                </div>
+                
+                <!-- Servicios -->
+                <div class="seccion-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                        </svg>
+                        Servicios que ofrezco
+                    </h3>
+                    <div class="servicios-grid" id="servicios-lista">
+                        <div class="servicio-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Elaboración de muebles
+                        </div>
+                        <div class="servicio-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Reparación de muebles
+                        </div>
+                        <div class="servicio-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Armado de closets
+                        </div>
+                        <div class="servicio-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Instalación de puertas
+                        </div>
+                        <div class="servicio-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Pisos de madera
+                        </div>
+                        <div class="servicio-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Acabados y barnizado
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reseñas -->
+                <div class="seccion-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        Reseñas de clientes
+                    </h3>
+                    <div class="resenas-lista">
+                        <div class="resena-card">
+                            <div class="resena-header">
+                                <div class="resena-avatar">M</div>
+                                <div>
+                                    <h4>María López</h4>
+                                    <div class="resena-estrellas">★★★★★</div>
+                                </div>
+                                <span class="resena-fecha">Hace 1 semana</span>
+                            </div>
+                            <p>Excelente trabajo! Muy profesional y puntual. El mueble quedó exactamente como lo pedí. 100% recomendado.</p>
+                        </div>
+                        <div class="resena-card">
+                            <div class="resena-header">
+                                <div class="resena-avatar">J</div>
+                                <div>
+                                    <h4>Juan Pérez</h4>
+                                    <div class="resena-estrellas">★★★★★</div>
+                                </div>
+                                <span class="resena-fecha">Hace 2 semanas</span>
+                            </div>
+                            <p>Gran calidad en el trabajo. Me arregló una puerta que ya daba por perdida. Muy buen precio y rápido.</p>
+                        </div>
+                        <div class="resena-card">
+                            <div class="resena-header">
+                                <div class="resena-avatar">A</div>
+                                <div>
+                                    <h4>Ana García</h4>
+                                    <div class="resena-estrellas">★★★★☆</div>
+                                </div>
+                                <span class="resena-fecha">Hace 1 mes</span>
+                            </div>
+                            <p>Buen servicio. El closet quedó muy bien. Solo le bajo una estrella porque tardó un poco más de lo esperado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Columna derecha: Info adicional -->
+            <aside class="perfil-sidebar">
+                <!-- Información de contacto -->
+                <div class="sidebar-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Información
+                    </h3>
+                    <div class="info-lista">
+                        <div class="info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <div>
+                                <span class="info-label">Ubicación</span>
+                                <span class="info-value" id="ubicacion-trabajador">Lima, Perú</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <div>
+                                <span class="info-label">Miembro desde</span>
+                                <span class="info-value">Enero 2022</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <div>
+                                <span class="info-label">Disponibilidad</span>
+                                <span class="info-value disponible">Disponible ahora</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Horario de atención -->
+                <div class="sidebar-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Horario de atención
+                    </h3>
+                    <div class="horario-lista">
+                        <div class="horario-item">
+                            <span>Lunes - Viernes</span>
+                            <span>8:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="horario-item">
+                            <span>Sábado</span>
+                            <span>9:00 AM - 2:00 PM</span>
+                        </div>
+                        <div class="horario-item cerrado">
+                            <span>Domingo</span>
+                            <span>Cerrado</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Métodos de pago -->
+                <div class="sidebar-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                        Métodos de pago
+                    </h3>
+                    <div class="pagos-lista">
+                        <div class="pago-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                            Efectivo
+                        </div>
+                        <div class="pago-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Yape / Plin
+                        </div>
+                        <div class="pago-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Transferencia
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    <script src="../../public/js/tema-global.js"></script>
+    <script src="../Controlador/catalogo-auth.js"></script>
+    <script src="../Controlador/perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    color: #fff;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    padding: 20px 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.admin-header h1 {
+    color: #00d4ff;
+    font-size: 24px;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-info button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.admin-info button:hover {
+    background: #c0392b;
+}
+
+.admin-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.tab-btn:hover {
+    background: rgba(0,212,255,0.2);
+}
+
+.tab-btn.active {
+    background: #00d4ff;
+    color: #1a1a2e;
+    font-weight: bold;
+}
+
+.admin-seccion {
+    display: none;
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-seccion.active {
+    display: block;
+}
+
+.admin-seccion h2 {
+    color: #00d4ff;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-table th {
+    background: rgba(0,212,255,0.2);
+    color: #00d4ff;
+    font-weight: 600;
+}
+
+.admin-table tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.btn-ver {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.btn-eliminar {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-aprobar {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.btn-rechazar {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.estado-pendiente {
+    background: #f39c12;
+    color: #000;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.estado-aprobada {
+    background: #27ae60;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.estado-rechazada {
+    background: #e74c3c;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .admin-tabs {
+        justify-content: center;
+    }
+    
+    .admin-table {
+        font-size: 12px;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 8px 10px;
+    }
+}

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATALOGO - ServiDom</title>
+    <link rel="stylesheet" href="../../public/css/catalogo-auth.css">
+</head>
+<body>
+    <!-- Header con navegación y perfil -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>ServiDom</span>
+            </div>
+            
+            <!-- Navegación Principal -->
+            <nav class="main-nav">
+                <a href="catalogo-auth.php" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Inicio</span>
+                </a>
+                <a href="chat.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Mensajes</span>
+                </a>
+                <a href="explorar.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span>Explorar</span>
+                </a>
+            </nav>
+        </div>
+        
+        <div class="header-actions">
+            <!-- Notificaciones -->
+            <div class="notif-container">
+                <button class="icon-btn" id="notif-btn" title="Notificaciones">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="notif-dropdown" id="notif-dropdown">
+                    <div class="notif-header">
+                        <h3>Notificaciones</h3>
+                        <button onclick="marcarTodasLeidas()">Marcar leídas</button>
+                    </div>
+                    <div class="notif-list" id="notif-list">
+                        <!-- Se cargan dinámicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Perfil -->
+            <div class="perfil-container">
+                <button class="perfil-btn" id="perfil-btn">
+                    <div class="avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <span class="nombre-perfil" id="nombre-usuario">Usuario</span>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdown">
+                    <a href="perfil-personal.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Mi Perfil</span>
+                    </a>
+                    
+                    <!-- Selector de Tema Desplegable -->
+                    <div class="dropdown-submenu" id="tema-submenu">
+                        <div class="dropdown-item submenu-trigger" onclick="toggleTemaSubmenu(event)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                            </svg>
+                            <span>Cambiar Tema</span>
+                            <svg class="submenu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="submenu-content" id="submenu-tema">
+                            <button class="tema-option" data-tema="oscuro" onclick="cambiarTemaDropdown('oscuro')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                                <span>Oscuro</span>
+                            </button>
+                            <button class="tema-option" data-tema="claro" onclick="cambiarTemaDropdown('claro')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                </svg>
+                                <span>Claro</span>
+                            </button>
+                            <button class="tema-option" data-tema="auto" onclick="cambiarTemaDropdown('auto')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                                <span>Sistema</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <a href="empleos-guardados.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span>Empleos Guardados</span>
+                    </a>
+                    <a href="historial.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Historial</span>
+                    </a>
+                    <a href="configuracion.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span>Configuración</span>
+                    </a>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <a href="#" class="dropdown-item logout" onclick="cerrarSesion()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor del catálogo -->
+    <main class="main-content">
+        <div class="container">
+            <div class="section-header">
+                <h1>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Catálogo de Ocupaciones
+                </h1>
+            </div>
+            <div class="catalogo">
+                <div class="producto" onclick="abrirCategoria('carpinteria')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/carpinteria.jpeg" alt="Carpinteria">
+                    <h3>Carpintería</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('soldadura')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/soldador.jpeg" alt="Soldadura">
+                    <h3>Soldadura</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('mecanica')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/Mecanica.jpeg" alt="Mecanica">
+                    <h3>Mecánica</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('gasfiteria')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/gasfitero.jpeg" alt="Gasfiteria">
+                    <h3>Gasfitería</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('cerrajeria')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/cerrajero.jpeg" alt="Cerrajeria">
+                    <h3>Cerrajería</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('pintura')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                            <path d="M2 2l7.586 7.586"></path>
+                            <circle cx="11" cy="11" r="2"></circle>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/pintor.jpeg" alt="Pintor">
+                    <h3>Pintura</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('electricidad')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/electricista.jpeg" alt="Electricidad">
+                    <h3>Electricidad</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('limpieza')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                            <line x1="16" y1="8" x2="2" y2="22"></line>
+                            <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/limpieza.jpeg" alt="Limpieza">
+                    <h3>Limpieza</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('jardineria')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/jardinero.jpeg" alt="Jardinería">
+                    <h3>Jardinería</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('albañileria')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/albanil.jpeg" alt="Albañilería">
+                    <h3>Albañilería</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('mudanzas')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/mudanza.jpeg" alt="Mudanzas">
+                    <h3>Mudanzas</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('electrodomesticos')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                            <polyline points="17 2 12 7 7 2"></polyline>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/electrodomesticos.jpeg" alt="Electrodomésticos">
+                    <h3>Electrodomésticos</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('refrigeracion')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="2" x2="12" y2="22"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/refrigeracion.jpeg" alt="Refrigeración">
+                    <h3>Refrigeración</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('fumigacion')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/fumigacion.jpeg" alt="Fumigación">
+                    <h3>Fumigación</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('vidrieria')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="12" y1="3" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/vidriero.jpeg" alt="Vidriería">
+                    <h3>Vidriería</h3>
+                </div>
+                <div class="producto" onclick="abrirCategoria('tapiceria')">
+                    <div class="producto-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
+                            <path d="M9 22V12h6v10"></path>
+                            <path d="M2 10.6L12 2l10 8.6"></path>
+                        </svg>
+                    </div>
+                    <img src="../../public/imagen/tapicero.jpeg" alt="Tapicería">
+                    <h3>Tapicería</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para agregar anuncio -->
+    <div id="formularioModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Agregar Nuevo Anuncio
+                </h2>
+                <button class="close-btn" onclick="cerrarFormulario()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form id="formularioAnuncio">
+                <div class="form-group">
+                    <label for="titulo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        Título
+                    </label>
+                    <input type="text" id="titulo" name="titulo" placeholder="Ej: Se necesita carpintero" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="17" y1="10" x2="3" y2="10"></line>
+                            <line x1="21" y1="6" x2="3" y2="6"></line>
+                            <line x1="21" y1="14" x2="3" y2="14"></line>
+                            <line x1="17" y1="18" x2="3" y2="18"></line>
+                        </svg>
+                        Descripción
+                    </label>
+                    <textarea id="descripcion" name="descripcion" placeholder="Describe el trabajo, requisitos, pago..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="categoria">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Categoría
+                    </label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option value="carpinteria">Carpintería</option>
+                        <option value="soldadura">Soldadura</option>
+                        <option value="mecanica">Mecánica</option>
+                        <option value="gasfiteria">Gasfitería</option>
+                        <option value="cerrajeria">Cerrajería</option>
+                        <option value="pintura">Pintura</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-secondary" onclick="cerrarFormulario()">Cancelar</button>
+                    <button type="button" class="btn-primary" onclick="agregarAnuncio()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Publicar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de éxito para solicitud de empleo -->
+    <div id="successModal" class="success-modal">
+        <div class="success-modal-content">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h2>¡Solicitud Enviada!</h2>
+            <p>Tu solicitud de empleo ha sido enviada correctamente. El cliente será notificado y podrá contactarte pronto.</p>
+            <div class="success-details" id="success-details">
+                <!-- Detalles del anuncio -->
+            </div>
+            <button class="btn-success-close" onclick="cerrarModalExito()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <script src="../../public/js/tema-global.js"></script>
+    <script src="../Controlador/catalogo-auth.js"></script>
+</body>
+</html>

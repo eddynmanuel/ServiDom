@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - ServiDom</title>
+    <link rel="stylesheet" href="../../public/css/catalogo-auth.css">
+    <link rel="stylesheet" href="../../public/css/configuracion.css">
+</head>
+<body>
+    <!-- Header con navegación y perfil -->
+    <header class="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>ServiDom</span>
+            </div>
+            
+            <!-- Navegación Principal -->
+            <nav class="main-nav">
+                <a href="catalogo-auth.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Inicio</span>
+                </a>
+                <a href="chat.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Mensajes</span>
+                </a>
+                <a href="explorar.php" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span>Explorar</span>
+                </a>
+            </nav>
+        </div>
+        
+        <div class="header-actions">
+            <!-- Notificaciones -->
+            <div class="notif-container">
+                <button class="icon-btn" id="notif-btn" title="Notificaciones">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="notif-dropdown" id="notif-dropdown">
+                    <div class="notif-header">
+                        <h3>Notificaciones</h3>
+                        <button onclick="marcarTodasLeidas()">Marcar leídas</button>
+                    </div>
+                    <div class="notif-list" id="notif-list"></div>
+                </div>
+            </div>
+            
+            <!-- Perfil -->
+            <div class="perfil-container">
+                <button class="perfil-btn" id="perfil-btn">
+                    <div class="avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <span class="nombre-perfil" id="nombre-usuario">Usuario</span>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdown">
+                    <a href="perfil-personal.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Mi Perfil</span>
+                    </a>
+                    
+                    <!-- Selector de Tema Desplegable -->
+                    <div class="dropdown-submenu" id="tema-submenu">
+                        <div class="dropdown-item submenu-trigger" onclick="toggleTemaSubmenu(event)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                            </svg>
+                            <span>Cambiar Tema</span>
+                            <svg class="submenu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="submenu-content" id="submenu-tema">
+                            <button class="tema-option" data-tema="oscuro" onclick="cambiarTemaDropdown('oscuro')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                                <span>Oscuro</span>
+                            </button>
+                            <button class="tema-option" data-tema="claro" onclick="cambiarTemaDropdown('claro')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                </svg>
+                                <span>Claro</span>
+                            </button>
+                            <button class="tema-option" data-tema="auto" onclick="cambiarTemaDropdown('auto')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                                <span>Sistema</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <a href="empleos-guardados.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span>Empleos Guardados</span>
+                    </a>
+                    <a href="historial.php" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Historial</span>
+                    </a>
+                    <a href="configuracion.php" class="dropdown-item active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span>Configuración</span>
+                    </a>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <a href="#" class="dropdown-item logout" onclick="cerrarSesion()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="config-layout">
+            <!-- Sidebar de navegación -->
+            <aside class="config-sidebar">
+                <div class="sidebar-header">
+                    <a href="catalogo-auth.php" class="btn-volver-integrado">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Volver al catálogo
+                    </a>
+                </div>
+                <nav class="config-nav">
+                    <a href="#cuenta" class="nav-item active" data-section="cuenta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Cuenta
+                    </a>
+                    <a href="#apariencia" class="nav-item" data-section="apariencia">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        Apariencia
+                    </a>
+                    <a href="#notificaciones" class="nav-item" data-section="notificaciones">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        Notificaciones
+                    </a>
+                    <a href="#privacidad" class="nav-item" data-section="privacidad">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Privacidad
+                    </a>
+                    <a href="#seguridad" class="nav-item" data-section="seguridad">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Seguridad
+                    </a>
+                    <a href="#ayuda" class="nav-item" data-section="ayuda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        Ayuda
+                    </a>
+                </nav>
+            </aside>
+            
+            <!-- Contenido principal -->
+            <div class="config-content">
+                <!-- Sección Cuenta -->
+                <section id="cuenta" class="config-section active">
+                    <div class="section-header">
+                        <h2>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Cuenta
+                        </h2>
+                        <p>Administra tu información personal y preferencias de cuenta</p>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Información personal</h3>
+                        <div class="form-group">
+                            <label>Nombre completo</label>
+                            <input type="text" id="config-nombre" value="Carlos García" placeholder="Tu nombre">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Correo electrónico</label>
+                                <input type="email" id="config-email" value="carlos@ejemplo.com" placeholder="tu@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="tel" id="config-telefono" value="+51 999 888 777" placeholder="+51 999 888 777">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input type="text" id="config-direccion" value="Av. Principal 123, Lima" placeholder="Tu dirección">
+                        </div>
+                        <button class="btn-guardar" onclick="guardarCuenta()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                <polyline points="7 3 7 8 15 8"></polyline>
+                            </svg>
+                            Guardar cambios
+                        </button>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Estado de disponibilidad</h3>
+                        <div class="estado-opciones">
+                            <label class="estado-option">
+                                <input type="radio" name="estado" value="activo" checked>
+                                <span class="estado-indicator activo"></span>
+                                <div>
+                                    <strong>Activo</strong>
+                                    <p>Los clientes pueden contactarte y solicitarte servicios</p>
+                                </div>
+                            </label>
+                            <label class="estado-option">
+                                <input type="radio" name="estado" value="ocupado">
+                                <span class="estado-indicator ocupado"></span>
+                                <div>
+                                    <strong>Ocupado</strong>
+                                    <p>No disponible temporalmente, pero visible en el catálogo</p>
+                                </div>
+                            </label>
+                            <label class="estado-option">
+                                <input type="radio" name="estado" value="inactivo">
+                                <span class="estado-indicator inactivo"></span>
+                                <div>
+                                    <strong>Inactivo</strong>
+                                    <p>No apareces en el catálogo ni recibes solicitudes</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Sección Apariencia -->
+                <section id="apariencia" class="config-section">
+                    <div class="section-header">
+                        <h2>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                            </svg>
+                            Apariencia
+                        </h2>
+                        <p>Personaliza cómo se ve la aplicación</p>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Tema de la interfaz</h3>
+                        <div class="tema-opciones">
+                            <label class="tema-option" data-tema="oscuro">
+                                <input type="radio" name="tema" value="oscuro" checked>
+                                <div class="tema-preview oscuro">
+                                    <div class="preview-header"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-card"></div>
+                                        <div class="preview-card"></div>
+                                    </div>
+                                </div>
+                                <span>Oscuro</span>
+                            </label>
+                            <label class="tema-option" data-tema="claro">
+                                <input type="radio" name="tema" value="claro">
+                                <div class="tema-preview claro">
+                                    <div class="preview-header"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-card"></div>
+                                        <div class="preview-card"></div>
+                                    </div>
+                                </div>
+                                <span>Claro</span>
+                            </label>
+                            <label class="tema-option" data-tema="auto">
+                                <input type="radio" name="tema" value="auto">
+                                <div class="tema-preview auto">
+                                    <div class="preview-header"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-card"></div>
+                                        <div class="preview-card"></div>
+                                    </div>
+                                </div>
+                                <span>Automático</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Idioma</h3>
+                        <div class="form-group">
+                            <select id="config-idioma">
+                                <option value="es" selected>Español</option>
+                                <option value="en">English</option>
+                                <option value="pt">Português</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Sección Notificaciones -->
+                <section id="notificaciones" class="config-section">
+                    <div class="section-header">
+                        <h2>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            </svg>
+                            Notificaciones
+                        </h2>
+                        <p>Configura cómo y cuándo deseas recibir notificaciones</p>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Notificaciones push</h3>
+                        <div class="toggle-group">
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Nuevos mensajes</strong>
+                                    <p>Recibir notificaciones de mensajes nuevos</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Solicitudes de servicio</strong>
+                                    <p>Notificaciones cuando alguien solicita tus servicios</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Valoraciones</strong>
+                                    <p>Notificaciones de nuevas reseñas y valoraciones</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Notificaciones por correo</h3>
+                        <div class="toggle-group">
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Resumen semanal</strong>
+                                    <p>Recibe un resumen de actividad cada semana</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Promociones y novedades</strong>
+                                    <p>Información sobre ofertas y nuevas funciones</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Sección Privacidad -->
+                <section id="privacidad" class="config-section">
+                    <div class="section-header">
+                        <h2>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Privacidad
+                        </h2>
+                        <p>Controla quién puede ver tu información</p>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Visibilidad del perfil</h3>
+                        <div class="toggle-group">
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Mostrar teléfono</strong>
+                                    <p>Permitir que los clientes vean tu número de teléfono</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Mostrar ubicación exacta</strong>
+                                    <p>Mostrar tu dirección completa en el perfil</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <div>
+                                    <strong>Aparecer en búsquedas</strong>
+                                    <p>Permitir que tu perfil aparezca en resultados de búsqueda</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Sección Seguridad -->
+                <section id="seguridad" class="config-section">
+                    <div class="section-header">
+                        <h2>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            Seguridad
+                        </h2>
+                        <p>Configura la seguridad de tu cuenta</p>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Cambiar contraseña</h3>
+                        <div class="form-group">
+                            <label>Contraseña actual</label>
+                            <input type="password" placeholder="••••••••">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nueva contraseña</label>
+                                <input type="password" placeholder="••••••••">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmar contraseña</label>
+                                <input type="password" placeholder="••••••••">
+                            </div>
+                        </div>
+                        <button class="btn-guardar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Actualizar contraseña
+                        </button>
+                    </div>
+                    
+                    <div class="config-card danger">
+                        <h3>Zona de peligro</h3>
+                        <p class="danger-text">Estas acciones son permanentes y no se pueden deshacer.</p>
+                        <div class="danger-actions">
+                            <button class="btn-danger" onclick="desactivarCuenta()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                                </svg>
+                                Desactivar cuenta
+                            </button>
+                            <button class="btn-danger-outline" onclick="eliminarCuenta()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                                Eliminar cuenta
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Sección Ayuda -->
+                <section id="ayuda" class="config-section">
+                    <div class="section-header">
+                        <h2>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                            Ayuda y Soporte
+                        </h2>
+                        <p>¿Necesitas ayuda? Estamos aquí para ti</p>
+                    </div>
+                    
+                    <div class="ayuda-grid">
+                        <a href="#" class="ayuda-card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            <h4>Centro de ayuda</h4>
+                            <p>Encuentra respuestas a preguntas frecuentes</p>
+                        </a>
+                        <a href="#" class="ayuda-card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <h4>Chat de soporte</h4>
+                            <p>Habla con nuestro equipo en tiempo real</p>
+                        </a>
+                        <a href="#" class="ayuda-card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <h4>Enviar correo</h4>
+                            <p>Escríbenos a soporte@servidom.com</p>
+                        </a>
+                        <a href="#" class="ayuda-card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <h4>Términos y políticas</h4>
+                            <p>Lee nuestros términos de servicio</p>
+                        </a>
+                    </div>
+                    
+                    <div class="config-card">
+                        <h3>Versión de la aplicación</h3>
+                        <div class="version-info">
+                            <span>ServiDom v1.0.0</span>
+                            <span class="version-date">Última actualización: Febrero 2026</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <script src="../../public/js/tema-global.js"></script>
+    <script src="../Controlador/catalogo-auth.js"></script>
+    <script src="../Controlador/configuracion.js"></script>
+</body>
+</html>
