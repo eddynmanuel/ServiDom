@@ -1,5 +1,5 @@
 {
-  "cleanUrls": true,
+
   "rewrites": [
     { "source": "/", "destination": "/app/Vista/catalogo.html" },
     { "source": "/login", "destination": "/app/Vista/login.html" },
