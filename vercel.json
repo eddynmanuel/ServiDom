@@ -1,7 +1,5 @@
 {
-
   "rewrites": [
-    { "source": "/", "destination": "/app/Vista/catalogo.html" },
     { "source": "/login", "destination": "/app/Vista/login.html" },
     { "source": "/registro", "destination": "/app/Vista/registro.html" },
     { "source": "/catalogo", "destination": "/app/Vista/catalogo.html" },

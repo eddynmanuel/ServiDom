@@ -1,6 +1,4 @@
-// Tema global - APLICAR INMEDIATAMENTE antes del render
 (function() {
-    // Aplicar tema INMEDIATAMENTE al cargar el script (antes del DOM)
     const tema = localStorage.getItem('tema_preferido') || 'oscuro';
     
     function aplicarTemaInicial() {
@@ -19,10 +17,8 @@
         }
     }
     
-    // Aplicar al documento inmediatamente
     aplicarTemaInicial();
     
-    // Volver a aplicar cuando el DOM esté listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             aplicarTemaInicial();
