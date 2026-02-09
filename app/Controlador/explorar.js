@@ -119,7 +119,7 @@ function verificarSesion() {
     
     // Si es cliente, redirigir a catálogo
     if (tipoUsuario === 'cliente') {
-        window.location.href = 'catalogo-auth.html';
+        window.location.href = 'catalogo.html';
         return;
     }
     

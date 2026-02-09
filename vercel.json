@@ -4,21 +4,6 @@
     { "source": "/", "destination": "/app/Vista/catalogo.html" },
     { "source": "/login", "destination": "/app/Vista/login.html" },
     { "source": "/registro", "destination": "/app/Vista/registro.html" },
-    { "source": "/catalogo", "destination": "/app/Vista/catalogo.html" },
-    {
-      "source": "/catalogo-auth",
-      "destination": "/app/Vista/catalogo-auth.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    }
+    { "source": "/catalogo", "destination": "/app/Vista/catalogo.html" }
   ]
 }

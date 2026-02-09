@@ -42,7 +42,7 @@ function verificarAdmin() {
     // Solo admin puede acceder
     if (datos.email !== 'admin@servidom.com') {
         alert('Acceso denegado. Solo administradores pueden acceder.');
-        window.location.href = 'catalogo-auth.html';
+        window.location.href = 'catalogo.html';
         return;
     }
     document.getElementById('admin-nombre').textContent = datos.nombre;

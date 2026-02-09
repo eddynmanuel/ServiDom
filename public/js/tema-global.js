@@ -126,7 +126,7 @@ function mostrarToastGlobal(mensaje) {
 // Cerrar sesión global
 function cerrarSesion() {
     localStorage.removeItem('usuario_logueado');
-    window.location.href = 'catalogo.php';
+    window.location.href = 'catalogo.html';
 }
 
 // Cerrar submenús al hacer click fuera

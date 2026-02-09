@@ -31,7 +31,7 @@ function validarFormulario(event) {
         if (usuario.email === 'admin@servidom.com') {
             window.location.href = "admin.html";
         } else {
-            window.location.href = "catalogo-auth.html";
+            window.location.href = "catalogo.html";
         }
     } else {
         errorDiv.innerText = "Correo o contraseña incorrectos.";

@@ -1,30 +1,29 @@
+/* Registro Unificado - CSS */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --bg-dark: #0f0f23;
+    --bg-card: #1a1a2e;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b2;
+    --border: #2a2a4a;
+    --success: #22c55e;
+    --error: #ef4444;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-:root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #10b981;
-    --bg-dark: #0f172a;
-    --bg-card: #1e293b;
-    --bg-hover: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border: #334155;
-    --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
-
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg-dark);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
     min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     padding: 20px;
 }
 
@@ -35,141 +34,184 @@ body {
 
 .registro-card {
     background: var(--bg-card);
-    border: 1px solid var(--border);
     border-radius: 24px;
     padding: 40px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
 .registro-header {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 30px;
 }
 
 .logo {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    font-size: 28px;
-    font-weight: 700;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .logo svg {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     stroke: var(--primary);
 }
 
-.registro-header h1 {
-    color: var(--text-primary);
-    font-size: 28px;
+.logo span {
+    font-size: 24px;
     font-weight: 700;
+    color: var(--text-primary);
+}
+
+.registro-header h1 {
+    font-size: 28px;
+    color: var(--text-primary);
     margin-bottom: 8px;
 }
 
 .registro-header p {
     color: var(--text-secondary);
-    font-size: 15px;
+    font-size: 14px;
 }
 
-.tipo-buttons {
+/* Tabs */
+.tabs-container {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
-.tipo-btn {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-    padding: 20px;
-    background: var(--bg-dark);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: left;
-}
-
-.tipo-btn:hover {
-    border-color: var(--primary);
-    transform: translateX(4px);
-}
-
-.tipo-icon {
-    width: 56px;
-    height: 56px;
-    background: var(--gradient);
-    border-radius: 16px;
+.tab-btn {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-}
-
-.tipo-icon.trabajador {
-    background: var(--gradient-green);
-}
-
-.tipo-icon svg {
-    width: 28px;
-    height: 28px;
-    stroke: white;
-}
-
-.tipo-info {
-    flex: 1;
-}
-
-.tipo-info h3 {
-    color: var(--text-primary);
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.tipo-info p {
+    gap: 8px;
+    padding: 14px;
+    background: transparent;
+    border: 2px solid var(--border);
+    border-radius: 12px;
     color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.tab-btn:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-color: transparent;
+    color: white;
+}
+
+/* Formularios */
+.registro-form {
+    display: none;
+}
+
+.registro-form.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-dark);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: var(--text-secondary);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.error-container {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 16px;
+    display: none;
+}
+
+.error-container.visible {
+    display: block;
+}
+
+.error-container ul {
+    list-style: none;
+    color: var(--error);
     font-size: 13px;
 }
 
-.arrow-icon {
-    width: 24px;
-    height: 24px;
-    stroke: var(--text-secondary);
-    transition: all 0.3s;
+.error-container li {
+    padding: 4px 0;
 }
 
-.tipo-btn:hover .arrow-icon {
-    stroke: var(--primary);
-    transform: translateX(4px);
+.btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+}
+
+/* Footer */
 .registro-footer {
-    margin-top: 32px;
     text-align: center;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
 }
 
 .registro-footer p {
     color: var(--text-secondary);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .registro-footer a {
     color: var(--primary);
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
+    font-weight: 600;
 }
 
 .registro-footer a:hover {
-    color: var(--primary-dark);
+    text-decoration: underline;
 }
 
 .back-link {
@@ -177,7 +219,7 @@ body {
     align-items: center;
     gap: 8px;
     color: var(--text-secondary) !important;
-    font-size: 14px;
+    font-weight: 400 !important;
 }
 
 .back-link svg {
