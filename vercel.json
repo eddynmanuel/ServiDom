@@ -4,6 +4,17 @@
     { "source": "/", "destination": "/app/Vista/catalogo.html" },
     { "source": "/login", "destination": "/app/Vista/login.html" },
     { "source": "/registro", "destination": "/app/Vista/registro.html" },
-    { "source": "/catalogo", "destination": "/app/Vista/catalogo.html" }
+    { "source": "/catalogo", "destination": "/app/Vista/catalogo.html" },
+    { "source": "/explorar", "destination": "/app/Vista/explorar.html" },
+    { "source": "/chat", "destination": "/app/Vista/chat.html" },
+    { "source": "/categoria", "destination": "/app/Vista/categoria.html" },
+    { "source": "/perfil", "destination": "/app/Vista/perfil.html" },
+    { "source": "/perfil-personal", "destination": "/app/Vista/perfil-personal.html" },
+    { "source": "/empleos-guardados", "destination": "/app/Vista/empleos-guardados.html" },
+    { "source": "/historial", "destination": "/app/Vista/historial.html" },
+    { "source": "/configuracion", "destination": "/app/Vista/configuracion.html" },
+    { "source": "/valoracion", "destination": "/app/Vista/valoracion.html" },
+    { "source": "/trabajadores", "destination": "/app/Vista/trabajadores.html" },
+    { "source": "/admin", "destination": "/app/Vista/admin.html" }
   ]
 }
