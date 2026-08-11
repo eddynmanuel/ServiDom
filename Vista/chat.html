@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajadores - ServiDom</title>
-    <link rel="stylesheet" href="../../assets/css/catalogo.css">
-    <link rel="stylesheet" href="../../assets/css/trabajadores.css">
+    <title>Mensajes - ServiDom</title>
+    <link rel="stylesheet" href="chat.css">
 </head>
 <body>
-    <!-- Header con navegación y perfil -->
+    <!-- Header con navegación unificada -->
     <header class="main-header">
         <div class="header-left">
             <div class="logo">
@@ -29,7 +28,7 @@
                     </svg>
                     <span>Inicio</span>
                 </a>
-                <a href="chat.html" class="nav-item">
+                <a href="chat.html" class="nav-item active">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
@@ -166,49 +165,121 @@
         </div>
     </header>
 
-    <main class="main-content">
-        <!-- Header de página con botón volver integrado -->
-        <div class="page-header">
-            <a href="catalogo.html" class="btn-volver-inline">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-            </a>
-            <h1 id="categoria-titulo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-                Trabajadores
-            </h1>
-        </div>
-        
-        <div class="trabajadores-layout">
-            <!-- Sidebar de subcategorías -->
-            <aside class="subcategorias-sidebar">
-                <h3>
+    <main class="chat-layout">
+        <!-- Sidebar de conversaciones -->
+        <aside class="conversations-sidebar">
+            <div class="sidebar-header">
+                <h2>Conversaciones</h2>
+                <button class="btn-new-chat" title="Nueva conversación">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    Especialidades
-                </h3>
-                <ul id="subcategorias-lista">
-                    <!-- Se cargan dinámicamente -->
-                </ul>
-            </aside>
+                </button>
+            </div>
             
-            <!-- Grid de trabajadores -->
-            <section class="trabajadores-grid" id="trabajadores-grid">
+            <div class="search-conversations">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="buscar-chat" placeholder="Buscar conversación...">
+            </div>
+            
+            <div class="conversations-list" id="conversations-list">
                 <!-- Se cargan dinámicamente -->
-            </section>
-        </div>
+            </div>
+        </aside>
+
+        <!-- Área de chat principal -->
+        <section class="chat-main" id="chat-main">
+            <!-- Estado vacío -->
+            <div class="chat-empty" id="chat-empty">
+                <div class="empty-illustration">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <h3>Tus mensajes</h3>
+                <p>Selecciona una conversación para ver tus mensajes o inicia una nueva</p>
+            </div>
+
+            <!-- Vista de conversación activa -->
+            <div class="chat-active" id="chat-active" style="display: none;">
+                <!-- Header del chat -->
+                <div class="chat-header">
+                    <button class="btn-back-mobile" id="btn-back">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </button>
+                    <div class="chat-contact-info">
+                        <div class="contact-avatar" id="contact-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="contact-details">
+                            <h3 id="contact-name">Nombre</h3>
+                            <span class="contact-status" id="contact-status">
+                                <span class="status-dot online"></span>
+                                En línea
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="btn-chat-action" title="Llamar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </button>
+                        <button class="btn-chat-action" title="Ver perfil">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Área de mensajes -->
+                <div class="messages-area" id="messages-area">
+                    <!-- Mensajes se cargan dinámicamente -->
+                </div>
+
+                <!-- Input de mensaje -->
+                <div class="message-input-area">
+                    <button class="btn-attach" title="Adjuntar archivo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                        </svg>
+                    </button>
+                    <div class="input-wrapper">
+                        <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+                        <button class="btn-emoji" title="Emojis">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="btn-send" id="btn-send" title="Enviar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
     </main>
-    
-    <script src="../../assets/js/tema-global.js"></script>
-    <script src="../Controlador/catalogo.js"></script>
-    <script src="../Controlador/trabajadores.js"></script>
+
+    <script src="../Controlador/tema-global.js"></script>
+    <script src="../Controlador/chat.js"></script>
 </body>
 </html>

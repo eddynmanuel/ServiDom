@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valorar Servicio - ServiDom</title>
-    <link rel="stylesheet" href="../../assets/css/catalogo.css">
-    <link rel="stylesheet" href="../../assets/css/valoracion.css">
+    <title>Trabajadores - ServiDom</title>
+    <link rel="stylesheet" href="catalogo.css">
+    <link rel="stylesheet" href="trabajadores.css">
 </head>
 <body>
     <!-- Header con navegación y perfil -->
@@ -167,46 +167,48 @@
     </header>
 
     <main class="main-content">
-        <div class="valoracion-card">
-            <div class="valoracion-header">
-                <div class="avatar-trabajador">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </div>
-                <h2 id="nombre-trabajador">Nombre del Trabajador</h2>
-                <p class="ocupacion" id="ocupacion-trabajador">Ocupación</p>
-            </div>
-            
-            <div class="valoracion-estrellas">
-                <h3>¿Cómo calificarías el servicio?</h3>
-                <div class="estrellas-container" id="estrellas-container">
-                    <span class="estrella" data-valor="1">★</span>
-                    <span class="estrella" data-valor="2">★</span>
-                    <span class="estrella" data-valor="3">★</span>
-                    <span class="estrella" data-valor="4">★</span>
-                    <span class="estrella" data-valor="5">★</span>
-                </div>
-                <p class="texto-valoracion" id="texto-valoracion">Selecciona una valoración</p>
-            </div>
-            
-            <div class="valoracion-comentario">
-                <label for="comentario">Comentario (opcional)</label>
-                <textarea id="comentario" placeholder="Cuéntanos tu experiencia..."></textarea>
-            </div>
-            
-            <button class="btn-enviar-valoracion" onclick="enviarValoracion()">
+        <!-- Header de página con botón volver integrado -->
+        <div class="page-header">
+            <a href="catalogo.html" class="btn-volver-inline">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
-                Enviar Valoración
-            </button>
+            </a>
+            <h1 id="categoria-titulo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Trabajadores
+            </h1>
+        </div>
+        
+        <div class="trabajadores-layout">
+            <!-- Sidebar de subcategorías -->
+            <aside class="subcategorias-sidebar">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                    </svg>
+                    Especialidades
+                </h3>
+                <ul id="subcategorias-lista">
+                    <!-- Se cargan dinámicamente -->
+                </ul>
+            </aside>
+            
+            <!-- Grid de trabajadores -->
+            <section class="trabajadores-grid" id="trabajadores-grid">
+                <!-- Se cargan dinámicamente -->
+            </section>
         </div>
     </main>
     
-    <script src="../../assets/js/tema-global.js"></script>
+    <script src="../Controlador/tema-global.js"></script>
     <script src="../Controlador/catalogo.js"></script>
-    <script src="../Controlador/valoracion.js"></script>
+    <script src="../Controlador/trabajadores.js"></script>
 </body>
 </html>

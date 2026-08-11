@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleos Guardados - ServiDom</title>
-    <link rel="stylesheet" href="../../assets/css/catalogo.css">
-    <link rel="stylesheet" href="../../assets/css/empleos-guardados.css">
+    <title>Valorar Servicio - ServiDom</title>
+    <link rel="stylesheet" href="catalogo.css">
+    <link rel="stylesheet" href="valoracion.css">
 </head>
 <body>
     <!-- Header con navegación y perfil -->
@@ -130,7 +130,7 @@
                     
                     <div class="dropdown-divider"></div>
                     
-                    <a href="empleos-guardados.html" class="dropdown-item active">
+                    <a href="empleos-guardados.html" class="dropdown-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
@@ -167,109 +167,46 @@
     </header>
 
     <main class="main-content">
-        <div class="container">
-            <!-- Encabezado de la página -->
-            <div class="page-header">
-                <div class="header-info">
-                    <a href="catalogo.html" class="btn-volver">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                        Volver
-                    </a>
-                    <h1>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        Mis Empleos
-                    </h1>
-                    <p>Gestiona tus empleos guardados, postulaciones y procesos activos</p>
+        <div class="valoracion-card">
+            <div class="valoracion-header">
+                <div class="avatar-trabajador">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
                 </div>
+                <h2 id="nombre-trabajador">Nombre del Trabajador</h2>
+                <p class="ocupacion" id="ocupacion-trabajador">Ocupación</p>
             </div>
-
-            <!-- Pestañas de navegación -->
-            <div class="tabs-container">
-                <div class="tabs-nav">
-                    <button class="tab-btn active" data-tab="guardados">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        Guardados
-                        <span class="tab-count" id="count-guardados">0</span>
-                    </button>
-                    <button class="tab-btn" data-tab="postulados">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        Postulados
-                        <span class="tab-count" id="count-postulados">0</span>
-                    </button>
-                    <button class="tab-btn" data-tab="procesados">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        En Proceso
-                        <span class="tab-count" id="count-procesados">0</span>
-                    </button>
+            
+            <div class="valoracion-estrellas">
+                <h3>¿Cómo calificarías el servicio?</h3>
+                <div class="estrellas-container" id="estrellas-container">
+                    <span class="estrella" data-valor="1">★</span>
+                    <span class="estrella" data-valor="2">★</span>
+                    <span class="estrella" data-valor="3">★</span>
+                    <span class="estrella" data-valor="4">★</span>
+                    <span class="estrella" data-valor="5">★</span>
                 </div>
+                <p class="texto-valoracion" id="texto-valoracion">Selecciona una valoración</p>
             </div>
-
-            <!-- Contenido de las pestañas -->
-            <div class="tabs-content">
-                <!-- Guardados -->
-                <div class="tab-panel active" id="panel-guardados">
-                    <div class="empleos-grid" id="grid-guardados">
-                        <!-- Se cargan dinámicamente -->
-                    </div>
-                    <div class="empty-state" id="empty-guardados" style="display: none;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        <h3>No tienes empleos guardados</h3>
-                        <p>Explora el catálogo y guarda los empleos que te interesen</p>
-                        <a href="catalogo.html" class="btn-primary">Ver Catálogo</a>
-                    </div>
-                </div>
-
-                <!-- Postulados -->
-                <div class="tab-panel" id="panel-postulados">
-                    <div class="empleos-grid" id="grid-postulados">
-                        <!-- Se cargan dinámicamente -->
-                    </div>
-                    <div class="empty-state" id="empty-postulados" style="display: none;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <h3>No tienes postulaciones</h3>
-                        <p>Postúlate a los empleos que te interesen desde el catálogo</p>
-                        <a href="catalogo.html" class="btn-primary">Ver Empleos</a>
-                    </div>
-                </div>
-
-                <!-- Procesados -->
-                <div class="tab-panel" id="panel-procesados">
-                    <div class="empleos-grid" id="grid-procesados">
-                        <!-- Se cargan dinámicamente -->
-                    </div>
-                    <div class="empty-state" id="empty-procesados" style="display: none;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        <h3>No tienes empleos en proceso</h3>
-                        <p>Cuando un cliente acepte tu postulación, aparecerá aquí</p>
-                    </div>
-                </div>
+            
+            <div class="valoracion-comentario">
+                <label for="comentario">Comentario (opcional)</label>
+                <textarea id="comentario" placeholder="Cuéntanos tu experiencia..."></textarea>
             </div>
+            
+            <button class="btn-enviar-valoracion" onclick="enviarValoracion()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                Enviar Valoración
+            </button>
         </div>
     </main>
-
-    <script src="../../assets/js/tema-global.js"></script>
+    
+    <script src="../Controlador/tema-global.js"></script>
     <script src="../Controlador/catalogo.js"></script>
-    <script src="../Controlador/empleos-guardados.js"></script>
+    <script src="../Controlador/valoracion.js"></script>
 </body>
 </html>
