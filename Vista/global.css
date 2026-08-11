@@ -80,7 +80,7 @@ body {
 
 /* Global Typography Adjustments */
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 600; /* 600 is more professional and readable than 800 */
+    font-weight: 600; 
     line-height: 1.25;
     letter-spacing: -0.025em;
     color: var(--text-primary);
@@ -118,20 +118,26 @@ button, input, select, textarea {
     font-family: inherit;
 }
 
-.btn-primary, .btn-hero-primary {
-    background: var(--primary); /* Solid Trust Blue */
-    color: white !important;
-    border: none;
-    border-radius: var(--radius-md); /* Less rounded for professional look */
-    padding: 12px 28px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px var(--primary-glow);
+.btn-primary, .btn-hero-primary,
+.btn-secondary, .btn-hero-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    padding: 12px 28px;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* Prevent text breaking into two lines */
+    text-decoration: none;
+}
+
+.btn-primary, .btn-hero-primary {
+    background: var(--primary); 
+    color: white !important;
+    border: none;
+    box-shadow: 0 4px 12px var(--primary-glow);
 }
 
 .btn-primary:hover, .btn-hero-primary:hover {
@@ -144,20 +150,21 @@ button, input, select, textarea {
     background: transparent;
     color: var(--text-primary) !important;
     border: 1px solid var(--border-hover);
-    border-radius: var(--radius-md);
-    padding: 12px 28px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
 }
 
 .btn-secondary:hover, .btn-hero-secondary:hover {
     background: var(--bg-hover);
     border-color: var(--text-secondary);
+}
+
+/* Fix SVG size inside buttons */
+.btn-primary svg, 
+.btn-secondary svg, 
+.btn-hero-primary svg, 
+.btn-hero-secondary svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0; /* Prevent the icon from being squished */
 }
 
 /* Global Animations */

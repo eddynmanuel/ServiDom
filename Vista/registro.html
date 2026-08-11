@@ -42,57 +42,79 @@
 
             <!-- Formulario Cliente -->
             <form id="formCliente" class="registro-form active">
-                <div class="form-group">
-                    <input type="text" id="cliente-nombre" placeholder="Nombre" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="cliente-nombre" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="cliente-apellido" placeholder="Apellido" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="text" id="cliente-apellido" placeholder="Apellido" required>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="cliente-dni" placeholder="DNI (8 dígitos)" maxlength="8" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="cliente-telefono" placeholder="Teléfono (9 dígitos)" maxlength="9" required>
+                    </div>
                 </div>
+
                 <div class="form-group">
                     <input type="email" id="cliente-email" placeholder="Email" required>
                 </div>
-                <div class="form-group">
-                    <input type="text" id="cliente-dni" placeholder="DNI (8 dígitos)" maxlength="8" required>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="password" id="cliente-password" placeholder="Contraseña" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="cliente-confirmar" placeholder="Confirmar Contraseña" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="tel" id="cliente-telefono" placeholder="Teléfono (9 dígitos)" maxlength="9" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="cliente-password" placeholder="Contraseña" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="cliente-confirmar" placeholder="Confirmar Contraseña" required>
-                </div>
+
                 <div id="errorCliente" class="error-container"></div>
                 <button type="submit" class="btn-submit">Registrar como Cliente</button>
             </form>
 
             <!-- Formulario Trabajador -->
             <form id="formTrabajador" class="registro-form">
-                <div class="form-group">
-                    <input type="text" id="trabajador-nombre" placeholder="Nombre" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="trabajador-nombre" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="trabajador-apellido" placeholder="Apellido" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="text" id="trabajador-apellido" placeholder="Apellido" required>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="trabajador-dni" placeholder="DNI (8 dígitos)" maxlength="8" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="trabajador-telefono" placeholder="Teléfono (9 dígitos)" maxlength="9" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="text" id="trabajador-ocupacion" placeholder="Ocupación/Profesión" required>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="trabajador-ocupacion" placeholder="Ocupación/Profesión" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="trabajador-email" placeholder="Email" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="email" id="trabajador-email" placeholder="Email" required>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="password" id="trabajador-password" placeholder="Contraseña" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="trabajador-confirmar" placeholder="Confirmar Contraseña" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="text" id="trabajador-dni" placeholder="DNI (8 dígitos)" maxlength="8" required>
-                </div>
-                <div class="form-group">
-                    <input type="tel" id="trabajador-telefono" placeholder="Teléfono (9 dígitos)" maxlength="9" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="trabajador-password" placeholder="Contraseña" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="trabajador-confirmar" placeholder="Confirmar Contraseña" required>
-                </div>
+
                 <div id="errorTrabajador" class="error-container"></div>
                 <button type="submit" class="btn-submit">Registrar como Trabajador</button>
             </form>
@@ -109,6 +131,8 @@
             </div>
         </div>
     </div>
-    <script src="../Controlador/registro.js"></script>
+    <script type="module" src="../Controlador/registro.js"></script>
+
+    <script type="module" src="../Controlador/auth-state.js"></script>
 </body>
 </html>

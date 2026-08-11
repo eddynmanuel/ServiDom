@@ -1,4 +1,7 @@
-// Registro Unificado - JS
+import { auth, db } from '../Modelo/firebase.js';
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
 document.addEventListener('DOMContentLoaded', function() {
     const formCliente = document.getElementById('formCliente');
     const formTrabajador = document.getElementById('formTrabajador');
@@ -18,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function cambiarTab(tipo) {
+window.cambiarTab = function(tipo) {
     // Cambiar tabs
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -39,7 +42,7 @@ function cambiarTab(tipo) {
     }
 }
 
-function registrarUsuario(tipo) {
+async function registrarUsuario(tipo) {
     const prefix = tipo;
     const nombre = document.getElementById(`${prefix}-nombre`).value.trim();
     const apellido = document.getElementById(`${prefix}-apellido`).value.trim();
@@ -49,6 +52,7 @@ function registrarUsuario(tipo) {
     const password = document.getElementById(`${prefix}-password`).value;
     const confirmar = document.getElementById(`${prefix}-confirmar`).value;
     const errorContainer = document.getElementById(tipo === 'cliente' ? 'errorCliente' : 'errorTrabajador');
+    const btnSubmit = document.querySelector(`#form${tipo.charAt(0).toUpperCase() + tipo.slice(1)} button[type="submit"]`);
     
     let ocupacion = '';
     if (tipo === 'trabajador') {
@@ -69,35 +73,72 @@ function registrarUsuario(tipo) {
     
     if (errores.length > 0) {
         mostrarErrores(errorContainer, errores);
-    } else {
-        // Guardar usuario
-        const nuevoUsuario = {
-            nombre: nombre + ' ' + apellido,
+        return;
+    }
+
+    // Mostrar estado de carga
+    const textoOriginal = btnSubmit.innerHTML;
+    btnSubmit.innerHTML = 'Creando cuenta...';
+    btnSubmit.disabled = true;
+
+    try {
+        // Crear usuario en Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Guardar información adicional en Firestore
+        const userData = {
+            uid: user.uid,
+            nombre: nombre,
+            apellido: apellido,
             email: email,
-            password: password,
             tipo: tipo,
             telefono: telefono,
-            dni: dni
+            dni: dni,
+            fechaRegistro: new Date()
         };
         
         if (tipo === 'trabajador') {
-            nuevoUsuario.ocupacion = ocupacion;
+            userData.ocupacion = ocupacion;
         }
-        
-        let usuarios = JSON.parse(localStorage.getItem('usuarios_registrados')) || [];
-        usuarios.push(nuevoUsuario);
-        localStorage.setItem('usuarios_registrados', JSON.stringify(usuarios));
-        
+
+        // Guardar el documento en la colección 'usuarios'
+        await setDoc(doc(db, "usuarios", user.uid), userData);
+
+        console.log("Usuario registrado con éxito:", user.uid);
         alert(`${tipo === 'cliente' ? 'Cliente' : 'Trabajador'} registrado exitosamente`);
         window.location.href = 'login.html';
+
+    } catch (error) {
+        console.error("Error al registrar:", error);
+        let mensajeError = "Error al crear la cuenta.";
+        if (error.code === 'auth/email-already-in-use') {
+            mensajeError = "Este correo ya está registrado.";
+        }
+        mostrarErrores(errorContainer, [mensajeError]);
+    } finally {
+        // Restaurar botón
+        btnSubmit.innerHTML = textoOriginal;
+        btnSubmit.disabled = false;
     }
+}
+
+function validarEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
 }
 
 function mostrarErrores(container, errores) {
     container.innerHTML = '<ul>' + errores.map(e => `<li>${e}</li>`).join('') + '</ul>';
     container.classList.add('visible');
+    container.style.display = 'block';
 }
 
-function validarEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+window.mostrarContraseña = function(id) {
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+    } else {
+        input.type = "password";
+    }
 }

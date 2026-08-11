@@ -6,17 +6,27 @@
 
 
 
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
 .login-container {
     width: 100%;
     max-width: 440px;
+    margin: 0 auto;
 }
 
 .login-card {
-    
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 40px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-lg);
 }
 
 .login-header {
@@ -78,7 +88,7 @@
 .form-group input {
     width: 100%;
     padding: 14px 16px;
-    background: var(--bg-dark);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border);
     border-radius: 12px;
     color: var(--text-primary);
@@ -145,7 +155,7 @@
     justify-content: center;
     gap: 10px;
     padding: 16px;
-    background: var(--gradient);
+    background: var(--primary);
     border: none;
     border-radius: 12px;
     color: white;
@@ -183,7 +193,7 @@
 }
 
 .login-footer a:hover {
-    color: var(--primary-dark);
+    text-decoration: underline;
 }
 
 .back-link {

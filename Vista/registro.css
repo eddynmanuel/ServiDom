@@ -8,22 +8,32 @@
 
 
 
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
 .registro-container {
     width: 100%;
-    max-width: 480px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .registro-card {
-    
-    border-radius: 24px;
-    padding: 40px;
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 20px;
+    padding: 30px;
     border: 1px solid var(--border);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-lg);
 }
 
 .registro-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .logo {
@@ -31,7 +41,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .logo svg {
@@ -61,7 +71,7 @@
 .tabs-container {
     display: flex;
     gap: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .tab-btn {
@@ -70,10 +80,10 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 14px;
+    padding: 10px;
     background: transparent;
     border: 2px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     color: var(--text-secondary);
     font-size: 14px;
     font-weight: 600;
@@ -92,7 +102,7 @@
 }
 
 .tab-btn.active {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    background: var(--primary);
     border-color: transparent;
     color: white;
 }
@@ -107,17 +117,30 @@
 }
 
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 500px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
 
 .form-group input {
     width: 100%;
-    padding: 14px 16px;
-    background: var(--bg-dark);
-    border: 2px solid var(--border);
-    border-radius: 12px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
     color: var(--text-primary);
-    font-size: 15px;
+    font-size: 14px;
     transition: all 0.3s ease;
 }
 
@@ -156,12 +179,12 @@
 
 .btn-submit {
     width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 14px;
+    background: var(--primary);
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -175,8 +198,8 @@
 /* Footer */
 .registro-footer {
     text-align: center;
-    margin-top: 24px;
-    padding-top: 24px;
+    margin-top: 16px;
+    padding-top: 16px;
     border-top: 1px solid var(--border);
 }
 
