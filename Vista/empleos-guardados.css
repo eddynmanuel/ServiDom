@@ -1,44 +1,13 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #10b981;
-    --accent: #f59e0b;
     --danger: #ef4444;
-    --bg-dark: #0f172a;
-    --bg-card: #1e293b;
-    --bg-hover: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border: #334155;
-    --shadow: 0 10px 40px rgba(0,0,0,0.3);
-    --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /* Tema Claro */
-html.tema-claro,
-body.tema-claro,
-.tema-claro {
-    --bg-dark: #f1f5f9;
-    --bg-card: #ffffff;
-    --bg-hover: #e2e8f0;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --border: #e2e8f0;
-}
 
-body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    min-height: 100vh;
-    transition: background 0.3s, color 0.3s;
-}
+
+
 
 /* Header - Mismo estilo que historial */
 .main-header {
@@ -46,7 +15,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 32px;
-    background: var(--bg-card);
+    
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -71,7 +40,7 @@ body {
 .notification-badge { position: absolute; top: -5px; right: -5px; background: var(--danger); color: white; font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 10px; }
 
 .notif-container, .perfil-container { position: relative; }
-.notif-dropdown, .dropdown-menu { position: absolute; top: calc(100% + 10px); right: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 200; }
+.notif-dropdown, .dropdown-menu { position: absolute; top: calc(100% + 10px); right: 0;  border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 200; }
 .notif-dropdown { width: 300px; }
 .dropdown-menu { padding: 8px; min-width: 220px; }
 .notif-dropdown.visible, .dropdown-menu.visible { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -163,7 +132,7 @@ body {
 .tabs-nav {
     display: flex;
     gap: 8px;
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 8px;
@@ -233,7 +202,7 @@ body {
 }
 
 .empleo-card {
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 20px;
@@ -397,7 +366,7 @@ body {
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 16px;
 }

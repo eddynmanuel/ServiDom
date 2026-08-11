@@ -1,44 +1,13 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #10b981;
-    --accent: #f59e0b;
     --danger: #ef4444;
-    --bg-dark: #0f172a;
-    --bg-card: #1e293b;
-    --bg-hover: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border: #334155;
-    --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 /* Tema Claro */
-html.tema-claro,
-body.tema-claro,
-.tema-claro {
-    --bg-dark: #f1f5f9;
-    --bg-card: #ffffff;
-    --bg-hover: #e2e8f0;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --border: #e2e8f0;
-}
 
-body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    min-height: 100vh;
-    transition: background 0.3s, color 0.3s;
-}
+
+
 
 /* Header */
 .main-header {
@@ -46,7 +15,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 32px;
-    background: var(--bg-card);
+    
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -147,7 +116,7 @@ body {
 }
 
 .icon-btn:hover {
-    background: var(--bg-card);
+    
     border-color: var(--primary);
 }
 
@@ -167,7 +136,7 @@ body {
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 16px;
     box-shadow: var(--shadow);
@@ -457,7 +426,7 @@ body {
 }
 
 .sidebar-header {
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 20px;
@@ -489,7 +458,7 @@ body {
 }
 
 .config-nav {
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 12px;
@@ -577,7 +546,7 @@ body {
 }
 
 .config-card {
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 28px;
@@ -941,7 +910,7 @@ body {
 }
 
 .ayuda-card {
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 24px;

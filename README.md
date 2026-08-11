@@ -1,7 +1,5 @@
 # ServiDom - Plataforma de Servicios a Domicilio
 
-![ServiDom Demo](https://servi-dom.vercel.app/favicon.svg)
-
 **ServiDom** es una plataforma web innovadora diseñada para conectar a profesionales de oficios (como electricistas, carpinteros, plomeros, limpieza, entre otros) con clientes que requieren servicios a domicilio. La aplicación ofrece una experiencia de usuario moderna, rápida y muy intuitiva.
 
 ## 🚀 Tecnologías (Tech Stack)

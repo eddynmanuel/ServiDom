@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color Palette - Trustworthy & Professional (Dark Theme Default) */
+    --primary: #3b82f6; /* Trust Blue */
+    --primary-hover: #60a5fa;
+    --primary-glow: rgba(59, 130, 246, 0.4);
+    
+    --secondary: #10b981; /* Emerald / Success */
+    --secondary-glow: rgba(16, 185, 129, 0.4);
+    
+    --accent: #f59e0b; /* Amber */
+    
+    --bg-dark: #0f172a; /* Slate 900 - Professional Dark */
+    --bg-card: rgba(30, 41, 59, 0.6); /* Slate 800 - Glass */
+    --bg-hover: rgba(51, 65, 85, 0.8); /* Slate 700 */
+    
+    --text-primary: #f8fafc; /* Slate 50 - Crisp White */
+    --text-secondary: #cbd5e1; /* Slate 300 - Readable Gray */
+    --text-muted: #94a3b8; /* Slate 400 */
+    
+    --border: rgba(248, 250, 252, 0.08);
+    --border-hover: rgba(248, 250, 252, 0.15);
+    
+    /* Gradients */
+    --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); /* Fix for missing text */
+    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    
+    /* Modern UI Elements */
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px var(--primary-glow);
+    
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+    
+    --glass-blur: blur(12px);
+}
+
+/* Light Theme Override */
+html.tema-claro,
+body.tema-claro,
+.tema-claro {
+    --bg-dark: #f8fafc; /* Slate 50 */
+    --bg-card: rgba(255, 255, 255, 0.9);
+    --bg-hover: rgba(226, 232, 240, 0.9);
+    
+    --text-primary: #0f172a; /* Slate 900 */
+    --text-secondary: #475569; /* Slate 600 */
+    --text-muted: #64748b; /* Slate 500 */
+    
+    --border: rgba(15, 23, 42, 0.08);
+    --border-hover: rgba(15, 23, 42, 0.15);
+    
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+}
+
+/* Global Typography Adjustments */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600; /* 600 is more professional and readable than 800 */
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+}
+
+/* Gradient Text Fix (Used in Logos and Titles) */
+.gradient-text,
+.logo {
+    background: var(--gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* Utility Classes for Glassmorphism */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-lg);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-hover);
+}
+
+/* Base Inputs & Buttons Enhancement */
+button, input, select, textarea {
+    font-family: inherit;
+}
+
+.btn-primary, .btn-hero-primary {
+    background: var(--primary); /* Solid Trust Blue */
+    color: white !important;
+    border: none;
+    border-radius: var(--radius-md); /* Less rounded for professional look */
+    padding: 12px 28px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px var(--primary-glow);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary:hover, .btn-hero-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--primary-glow);
+}
+
+.btn-secondary, .btn-hero-secondary {
+    background: transparent;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-md);
+    padding: 12px 28px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-secondary:hover, .btn-hero-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--text-secondary);
+}
+
+/* Global Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0; 
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--bg-hover);
+    border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Icon Animations */
+svg {
+    transition: stroke 0.2s ease, transform 0.2s ease, fill 0.2s ease;
+}
+.hover-icon-bounce:hover svg {
+    transform: translateY(-3px) scale(1.05);
+    stroke: var(--primary);
+}

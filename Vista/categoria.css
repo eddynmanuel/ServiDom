@@ -10,7 +10,7 @@
     align-items: center;
     gap: 10px;
     padding: 12px 20px;
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 12px;
     color: var(--text-secondary);
@@ -38,7 +38,7 @@
     gap: 24px;
     margin-bottom: 32px;
     padding: 32px;
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 20px;
 }
@@ -92,7 +92,7 @@
     flex: 1;
     max-width: 450px;
     padding: 14px 20px;
-    background: var(--bg-card);
+    
     border: 2px solid var(--border);
     border-radius: 14px;
     transition: all 0.3s;
@@ -131,7 +131,7 @@
 
 .filtros-grupo select {
     padding: 14px 40px 14px 18px;
-    background: var(--bg-card);
+    
     border: 2px solid var(--border);
     border-radius: 14px;
     color: var(--text-primary);
@@ -154,7 +154,7 @@
     align-items: center;
     gap: 10px;
     padding: 12px 18px;
-    background: var(--bg-card);
+    
     border: 2px solid var(--border);
     border-radius: 14px;
     cursor: pointer;
@@ -197,7 +197,7 @@
 
 /* Card de Trabajador (para clientes) */
 .trabajador-card {
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 24px;
@@ -336,7 +336,7 @@
 
 /* Card de Anuncio (para trabajadores) */
 .anuncio-card {
-    background: var(--bg-card);
+    
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 24px;
@@ -511,7 +511,7 @@
     justify-content: center;
     text-align: center;
     padding: 80px 20px;
-    background: var(--bg-card);
+    
     border-radius: 24px;
     border: 2px dashed var(--border);
 }
@@ -551,7 +551,7 @@
 }
 
 .modal-detalle .modal-content {
-    background: var(--bg-card);
+    
     border-radius: 24px;
     width: 100%;
     max-width: 600px;
