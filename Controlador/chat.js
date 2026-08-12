@@ -67,25 +67,10 @@ const mensajes = {
 let conversacionActiva = null;
 
 document.addEventListener('DOMContentLoaded', function() {
-    verificarSesion();
     cargarConversaciones();
     configurarDropdowns();
     configurarEventos();
 });
-
-function verificarSesion() {
-    const usuario = localStorage.getItem('usuario_logueado');
-    if (!usuario) {
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    const datos = JSON.parse(usuario);
-    const nombreUsuario = document.getElementById('nombre-usuario');
-    if (nombreUsuario) {
-        nombreUsuario.textContent = datos.nombre || 'Usuario';
-    }
-}
 
 function cargarConversaciones() {
     const lista = document.getElementById('conversations-list');

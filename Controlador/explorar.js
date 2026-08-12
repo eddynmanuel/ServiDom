@@ -101,34 +101,11 @@ const anunciosSimulados = [
 let anunciosFiltrados = [...anunciosSimulados];
 
 document.addEventListener('DOMContentLoaded', function() {
-    verificarSesion();
     cargarAnuncios();
     configurarDropdowns();
     configurarFiltros();
     configurarVista();
 });
-
-function verificarSesion() {
-    const usuario = localStorage.getItem('usuario_logueado');
-    const tipoUsuario = localStorage.getItem('tipo_usuario');
-    
-    if (!usuario) {
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    // Si es cliente, redirigir a catálogo
-    if (tipoUsuario === 'cliente') {
-        window.location.href = 'catalogo.html';
-        return;
-    }
-    
-    const datos = JSON.parse(usuario);
-    const nombreUsuario = document.getElementById('nombre-usuario');
-    if (nombreUsuario) {
-        nombreUsuario.textContent = datos.nombre || 'Usuario';
-    }
-}
 
 function cargarAnuncios() {
     const grid = document.getElementById('anuncios-grid');
@@ -407,6 +384,66 @@ function postularAnuncio(id) {
 
 function guardarAnuncio(id) {
     mostrarToastGlobal('Anuncio guardado');
+}
+
+// Lógica de Publicar Anuncio
+function abrirModalPublicar() {
+    document.getElementById('modal-publicar').style.display = 'flex';
+}
+
+function cerrarModalPublicar() {
+    document.getElementById('modal-publicar').style.display = 'none';
+}
+
+function publicarNuevoAnuncio(event) {
+    event.preventDefault();
+    
+    const titulo = document.getElementById('pub-titulo').value;
+    const categoria = document.getElementById('pub-categoria').value;
+    const ubicacion = document.getElementById('pub-ubicacion').value;
+    const precio = document.getElementById('pub-precio').value;
+    const urgente = document.getElementById('pub-urgente').checked;
+    const descripcion = document.getElementById('pub-descripcion').value;
+    
+    // Icono basado en categoría
+    const iconos = {
+        'plomeria': '🔧', 'electricidad': '⚡', 'limpieza': '🧹', 
+        'pintura': '🎨', 'jardineria': '🌱', 'electrodomesticos': '📺', 
+        'carpinteria': '🪚', 'otros': '📦'
+    };
+    
+    // Obtener datos del usuario logueado
+    let nombreCliente = 'Usuario';
+    const usuarioStr = localStorage.getItem('usuario_logueado');
+    if (usuarioStr) {
+        const usuarioData = JSON.parse(usuarioStr);
+        nombreCliente = usuarioData.nombre || 'Usuario';
+    }
+    
+    const nuevoAnuncio = {
+        id: Date.now(),
+        titulo: titulo,
+        descripcion: descripcion,
+        categoria: categoria,
+        categoriaIcono: iconos[categoria] || '📦',
+        ubicacion: ubicacion,
+        precio: precio,
+        urgente: urgente,
+        fecha: new Date().toISOString().split('T')[0],
+        cliente: { nombre: nombreCliente, rating: 5.0, trabajos: 0 }
+    };
+    
+    // Añadir al inicio del arreglo
+    anunciosSimulados.unshift(nuevoAnuncio);
+    
+    // Resetear form y cerrar modal
+    document.getElementById('form-publicar').reset();
+    cerrarModalPublicar();
+    
+    // Recargar y mostrar éxito
+    anunciosFiltrados = [...anunciosSimulados];
+    cargarAnuncios();
+    mostrarToastGlobal('¡Trabajo publicado exitosamente!');
 }
 
 function debounce(func, wait) {

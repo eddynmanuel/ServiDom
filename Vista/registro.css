@@ -67,52 +67,8 @@ body {
     font-size: 14px;
 }
 
-/* Tabs */
-.tabs-container {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.tab-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px;
-    background: transparent;
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.tab-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
-.tab-btn:hover {
-    border-color: var(--primary);
-    color: var(--text-primary);
-}
-
-.tab-btn.active {
-    background: var(--primary);
-    border-color: transparent;
-    color: white;
-}
-
 /* Formularios */
 .registro-form {
-    display: none;
-}
-
-.registro-form.active {
     display: block;
 }
 
