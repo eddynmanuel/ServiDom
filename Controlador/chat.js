@@ -1,114 +1,139 @@
-// Datos simulados de conversaciones
-const conversaciones = [
-    {
-        id: 1,
-        nombre: 'Carlos Mendez',
-        online: true,
-        ultimoMensaje: 'Perfecto, entonces nos vemos mañana a las 9am',
-        hora: '10:30',
-        noLeidos: 2
-    },
-    {
-        id: 2,
-        nombre: 'María López',
-        online: true,
-        ultimoMensaje: '¡Gracias por el servicio! Todo quedó excelente',
-        hora: '09:15',
-        noLeidos: 0
-    },
-    {
-        id: 3,
-        nombre: 'Juan Rodríguez',
-        online: false,
-        ultimoMensaje: '¿Podría revisar el presupuesto que le envié?',
-        hora: 'Ayer',
-        noLeidos: 1
-    },
-    {
-        id: 4,
-        nombre: 'Ana García',
-        online: false,
-        ultimoMensaje: 'El trabajo quedó muy bien, muchas gracias',
-        hora: 'Lun',
-        noLeidos: 0
-    }
-];
+import { auth, db } from '../Modelo/firebase.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { collection, query, where, onSnapshot, addDoc, serverTimestamp, orderBy, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Mensajes simulados por conversación
-const mensajes = {
-    1: [
-        { id: 1, tipo: 'received', texto: 'Hola, necesito un servicio de plomería urgente', hora: '10:00' },
-        { id: 2, tipo: 'sent', texto: '¡Hola! Claro, ¿cuál es el problema?', hora: '10:05' },
-        { id: 3, tipo: 'received', texto: 'Tengo una fuga en el baño principal, el agua sale por debajo del lavamanos', hora: '10:10' },
-        { id: 4, tipo: 'sent', texto: 'Entiendo. Puedo ir mañana a las 9am, ¿le parece bien?', hora: '10:20' },
-        { id: 5, tipo: 'received', texto: 'Perfecto, entonces nos vemos mañana a las 9am', hora: '10:30' }
-    ],
-    2: [
-        { id: 1, tipo: 'received', texto: '¡Hola! ¿Disponible para una limpieza profunda?', hora: '08:30' },
-        { id: 2, tipo: 'sent', texto: '¡Hola María! Sí, tengo disponibilidad. ¿Cuándo lo necesitas?', hora: '08:45' },
-        { id: 3, tipo: 'received', texto: 'Para mañana en la tarde si es posible', hora: '08:50' },
-        { id: 4, tipo: 'sent', texto: 'Perfecto, puedo estar ahí a las 2pm', hora: '09:00' },
-        { id: 5, tipo: 'received', texto: '¡Gracias por el servicio! Todo quedó excelente', hora: '09:15' }
-    ],
-    3: [
-        { id: 1, tipo: 'sent', texto: 'Buenos días, le envío el presupuesto para la instalación', hora: '14:00' },
-        { id: 2, tipo: 'received', texto: 'Gracias, lo reviso y le confirmo', hora: '14:30' },
-        { id: 3, tipo: 'received', texto: '¿Podría revisar el presupuesto que le envié?', hora: '18:00' }
-    ],
-    4: [
-        { id: 1, tipo: 'received', texto: 'Hola, necesito una cotización para pintura', hora: '11:00' },
-        { id: 2, tipo: 'sent', texto: '¡Hola Ana! ¿Cuántas habitaciones desea pintar?', hora: '11:15' },
-        { id: 3, tipo: 'received', texto: 'Dos habitaciones y el corredor', hora: '11:20' },
-        { id: 4, tipo: 'sent', texto: 'El presupuesto total sería de $250.000 incluyendo materiales', hora: '11:30' },
-        { id: 5, tipo: 'received', texto: 'El trabajo quedó muy bien, muchas gracias', hora: '16:00' }
-    ]
-};
-
+let currentUser = null;
 let conversacionActiva = null;
+let chatsUnsub = null;
+let messagesUnsub = null;
 
-document.addEventListener('DOMContentLoaded', function() {
-    cargarConversaciones();
-    configurarDropdowns();
-    configurarEventos();
+// Cache of users we have fetched
+const userCache = {};
+
+document.addEventListener('DOMContentLoaded', () => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user;
+            // Guardar al usuario en la colección users si es su primera vez en chat
+            guardarUsuarioActual();
+            cargarConversaciones();
+            configurarEventos();
+        } else {
+            // Redirigir si no está autenticado
+            window.location.href = '../index.html';
+        }
+    });
 });
+
+async function guardarUsuarioActual() {
+    if (!currentUser) return;
+    const userRef = doc(db, 'users', currentUser.uid);
+    const docSnap = await getDoc(userRef);
+    if (!docSnap.exists()) {
+        await setDoc(userRef, {
+            nombre: currentUser.email.split('@')[0],
+            email: currentUser.email,
+            online: true
+        });
+    }
+}
+
+async function getUserInfo(uid) {
+    if (userCache[uid]) return userCache[uid];
+    try {
+        const userRef = doc(db, 'users', uid);
+        const docSnap = await getDoc(userRef);
+        if (docSnap.exists()) {
+            userCache[uid] = docSnap.data();
+            return userCache[uid];
+        }
+    } catch (e) {
+        console.error("Error fetching user", e);
+    }
+    return { nombre: 'Usuario Desconocido', online: false };
+}
 
 function cargarConversaciones() {
     const lista = document.getElementById('conversations-list');
     if (!lista) return;
-    
-    lista.innerHTML = conversaciones.map(conv => `
-        <div class="conversation-item ${conversacionActiva === conv.id ? 'active' : ''}" 
-             data-id="${conv.id}" 
-             onclick="abrirConversacion(${conv.id})">
-            <div class="conversation-avatar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                ${conv.online ? '<div class="online-indicator"></div>' : ''}
-            </div>
-            <div class="conversation-content">
-                <div class="conversation-header">
-                    <span class="conversation-name">${conv.nombre}</span>
-                    <span class="conversation-time">${conv.hora}</span>
+
+    const chatsRef = collection(db, 'chats');
+    const q = query(chatsRef, where('participants', 'array-contains', currentUser.uid));
+
+    if (chatsUnsub) chatsUnsub();
+
+    chatsUnsub = onSnapshot(q, async (snapshot) => {
+        if (snapshot.empty) {
+            lista.innerHTML = `
+                <div style="padding: 20px; text-align: center; color: var(--text-secondary);">
+                    <p>No tienes conversaciones aún.</p>
+                    <button onclick="iniciarChatDePrueba()" style="margin-top: 10px; padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        Iniciar Chat de Prueba
+                    </button>
                 </div>
-                <div class="conversation-preview">
-                    ${conv.ultimoMensaje}
-                    ${conv.noLeidos > 0 ? `<span class="unread-badge">${conv.noLeidos}</span>` : ''}
+            `;
+            return;
+        }
+
+        const chats = [];
+        for (const document of snapshot.docs) {
+            const data = document.data();
+            const otherUserId = data.participants.find(id => id !== currentUser.uid) || currentUser.uid; // If chatting with self
+            const otherUser = await getUserInfo(otherUserId);
+            
+            let timeStr = '';
+            if (data.lastMessageTime) {
+                const date = data.lastMessageTime.toDate();
+                timeStr = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+            }
+
+            chats.push({
+                id: document.id,
+                ...data,
+                otherUser,
+                timeStr
+            });
+        }
+
+        // Sort by lastMessageTime descending
+        chats.sort((a, b) => {
+            const timeA = a.lastMessageTime ? a.lastMessageTime.toMillis() : 0;
+            const timeB = b.lastMessageTime ? b.lastMessageTime.toMillis() : 0;
+            return timeB - timeA;
+        });
+
+        lista.innerHTML = chats.map(conv => `
+            <div class="conversation-item ${conversacionActiva === conv.id ? 'active' : ''}" 
+                 data-id="${conv.id}" 
+                 onclick="abrirConversacion('${conv.id}', '${conv.otherUser.nombre}', ${conv.otherUser.online})">
+                <div class="conversation-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    ${conv.otherUser.online ? '<div class="online-indicator"></div>' : ''}
+                </div>
+                <div class="conversation-content">
+                    <div class="conversation-header">
+                        <span class="conversation-name">${conv.otherUser.nombre}</span>
+                        <span class="conversation-time">${conv.timeStr}</span>
+                    </div>
+                    <div class="conversation-preview">
+                        ${conv.lastMessage || 'Sin mensajes'}
+                    </div>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `).join('');
+    });
 }
 
-function abrirConversacion(id) {
-    conversacionActiva = id;
-    const conv = conversaciones.find(c => c.id === id);
+window.abrirConversacion = function(chatId, nombre, online) {
+    conversacionActiva = chatId;
     
-    // Marcar como activa
+    // Marcar como activa en UI
     document.querySelectorAll('.conversation-item').forEach(item => {
         item.classList.remove('active');
-        if (parseInt(item.dataset.id) === id) {
+        if (item.dataset.id === chatId) {
             item.classList.add('active');
         }
     });
@@ -118,51 +143,60 @@ function abrirConversacion(id) {
     document.getElementById('chat-active').style.display = 'flex';
     
     // Actualizar info del contacto
-    document.getElementById('contact-name').textContent = conv.nombre;
+    document.getElementById('contact-name').textContent = nombre;
     document.getElementById('contact-status').innerHTML = `
-        <span class="status-dot ${conv.online ? 'online' : ''}"></span>
-        ${conv.online ? 'En línea' : 'Desconectado'}
+        <span class="status-dot ${online ? 'online' : ''}"></span>
+        ${online ? 'En línea' : 'Desconectado'}
     `;
     
-    // Cargar mensajes
-    cargarMensajes(id);
-    
-    // Marcar como leídos
-    conv.noLeidos = 0;
-    cargarConversaciones();
-}
+    // Cargar mensajes en tiempo real
+    if (messagesUnsub) messagesUnsub();
 
-function cargarMensajes(id) {
-    const area = document.getElementById('messages-area');
-    const msgs = mensajes[id] || [];
-    
-    area.innerHTML = msgs.map(msg => `
-        <div class="message ${msg.tipo}">
-            ${msg.tipo === 'received' ? `
-                <div class="message-avatar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
+    const messagesRef = collection(db, 'chats', chatId, 'messages');
+    const q = query(messagesRef, orderBy('timestamp', 'asc'));
+
+    messagesUnsub = onSnapshot(q, (snapshot) => {
+        const area = document.getElementById('messages-area');
+        
+        area.innerHTML = snapshot.docs.map(docSnap => {
+            const msg = docSnap.data();
+            const esMio = msg.senderId === currentUser.uid;
+            const tipo = esMio ? 'sent' : 'received';
+            
+            let timeStr = '';
+            if (msg.timestamp) {
+                timeStr = msg.timestamp.toDate().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+            }
+
+            return `
+                <div class="message ${tipo}">
+                    ${!esMio ? `
+                        <div class="message-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                    ` : ''}
+                    <div class="message-bubble">
+                        <div class="message-content">${msg.text}</div>
+                        <div class="message-time">${timeStr}</div>
+                    </div>
+                    ${esMio ? `
+                        <div class="message-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                    ` : ''}
                 </div>
-            ` : ''}
-            <div class="message-bubble">
-                <div class="message-content">${msg.texto}</div>
-                <div class="message-time">${msg.hora}</div>
-            </div>
-            ${msg.tipo === 'sent' ? `
-                <div class="message-avatar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </div>
-            ` : ''}
-        </div>
-    `).join('');
-    
-    // Scroll al final
-    area.scrollTop = area.scrollHeight;
+            `;
+        }).join('');
+        
+        // Scroll al final
+        area.scrollTop = area.scrollHeight;
+    });
 }
 
 function configurarEventos() {
@@ -189,11 +223,11 @@ function configurarEventos() {
             document.getElementById('chat-empty').style.display = 'flex';
             document.getElementById('chat-active').style.display = 'none';
             conversacionActiva = null;
-            cargarConversaciones();
+            // No recargamos conversaciones porque onSnapshot lo mantiene actualizado
         });
     }
     
-    // Búsqueda
+    // Búsqueda (filtrado local)
     const buscar = document.getElementById('buscar-chat');
     if (buscar) {
         buscar.addEventListener('input', function() {
@@ -202,73 +236,35 @@ function configurarEventos() {
     }
 }
 
-function enviarMensaje() {
+async function enviarMensaje() {
     const input = document.getElementById('message-input');
     const texto = input.value.trim();
     
-    if (!texto || !conversacionActiva) return;
+    if (!texto || !conversacionActiva || !currentUser) return;
     
-    // Agregar mensaje
-    const hora = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-    const nuevoMsg = {
-        id: Date.now(),
-        tipo: 'sent',
-        texto: texto,
-        hora: hora
-    };
-    
-    if (!mensajes[conversacionActiva]) {
-        mensajes[conversacionActiva] = [];
-    }
-    mensajes[conversacionActiva].push(nuevoMsg);
-    
-    // Actualizar último mensaje
-    const conv = conversaciones.find(c => c.id === conversacionActiva);
-    if (conv) {
-        conv.ultimoMensaje = texto;
-        conv.hora = hora;
-    }
-    
-    // Limpiar input y recargar
+    // Limpiar input inmediatamente para buena UX
     input.value = '';
-    cargarMensajes(conversacionActiva);
-    cargarConversaciones();
     
-    // Simular respuesta
-    setTimeout(() => {
-        simularRespuesta();
-    }, 1500);
-}
-
-function simularRespuesta() {
-    if (!conversacionActiva) return;
-    
-    const respuestas = [
-        'Entendido, gracias por la información',
-        'Perfecto, me parece bien',
-        '¡Excelente! Quedamos así entonces',
-        'Ok, le confirmo en un momento',
-        'Recibido, cualquier cosa le aviso'
-    ];
-    
-    const hora = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-    const respuesta = {
-        id: Date.now(),
-        tipo: 'received',
-        texto: respuestas[Math.floor(Math.random() * respuestas.length)],
-        hora: hora
-    };
-    
-    mensajes[conversacionActiva].push(respuesta);
-    
-    const conv = conversaciones.find(c => c.id === conversacionActiva);
-    if (conv) {
-        conv.ultimoMensaje = respuesta.texto;
-        conv.hora = hora;
+    try {
+        // Agregar a subcoleccion messages
+        const messagesRef = collection(db, 'chats', conversacionActiva, 'messages');
+        await addDoc(messagesRef, {
+            senderId: currentUser.uid,
+            text: texto,
+            timestamp: serverTimestamp()
+        });
+        
+        // Actualizar último mensaje en el chat
+        const chatRef = doc(db, 'chats', conversacionActiva);
+        await setDoc(chatRef, {
+            lastMessage: texto,
+            lastMessageTime: serverTimestamp()
+        }, { merge: true });
+        
+    } catch (e) {
+        console.error("Error al enviar mensaje:", e);
+        alert("Error al enviar el mensaje. Inténtalo de nuevo.");
     }
-    
-    cargarMensajes(conversacionActiva);
-    cargarConversaciones();
 }
 
 function filtrarConversaciones(query) {
@@ -287,34 +283,31 @@ function filtrarConversaciones(query) {
     });
 }
 
-function configurarDropdowns() {
-    const perfilBtn = document.getElementById('perfil-btn');
-    const dropdown = document.getElementById('dropdown');
-    const notifBtn = document.getElementById('notif-btn');
-    const notifDropdown = document.getElementById('notif-dropdown');
+// Función auxiliar para probar el chat real si la base de datos está vacía
+window.iniciarChatDePrueba = async function() {
+    if (!currentUser) return;
     
-    if (perfilBtn && dropdown) {
-        perfilBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            dropdown.classList.toggle('visible');
-            if (notifDropdown) notifDropdown.classList.remove('visible');
+    try {
+        const chatsRef = collection(db, 'chats');
+        
+        // Creamos un usuario bot de prueba en Firestore
+        const botId = "bot_soporte_123";
+        const userRef = doc(db, 'users', botId);
+        await setDoc(userRef, {
+            nombre: 'Soporte ServiDom',
+            email: 'soporte@servidom.com',
+            online: true
         });
-    }
-    
-    if (notifBtn && notifDropdown) {
-        notifBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            notifDropdown.classList.toggle('visible');
-            if (dropdown) dropdown.classList.remove('visible');
+        
+        // Creamos el chat
+        await addDoc(chatsRef, {
+            participants: [currentUser.uid, botId],
+            lastMessage: '¡Bienvenido al chat de prueba!',
+            lastMessageTime: serverTimestamp()
         });
+        
+        // Note: No necesitamos abrirlo manualmente, el onSnapshot actualizará la lista y el usuario podrá hacer click
+    } catch (e) {
+        console.error("Error al crear chat de prueba:", e);
     }
-    
-    document.addEventListener('click', function() {
-        if (dropdown) dropdown.classList.remove('visible');
-        if (notifDropdown) notifDropdown.classList.remove('visible');
-    });
-}
-
-function marcarTodasLeidas() {
-    mostrarToastGlobal('Notificaciones marcadas como leídas');
 }

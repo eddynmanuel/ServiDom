@@ -1,10 +1,6 @@
-
-
 :root {
     --error: #ef4444;
 }
-
-
 
 body {
     display: flex;

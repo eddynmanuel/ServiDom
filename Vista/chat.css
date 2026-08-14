@@ -1,12 +1,9 @@
-
-
 :root {
     --danger: #ef4444;
     --message-sent: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     --message-received: #334155;
 }
 
-/* Tema Claro */
 /* Header - Estilos unificados */
 .main-header {
     display: flex;
