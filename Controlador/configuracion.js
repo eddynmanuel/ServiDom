@@ -1,46 +1,71 @@
-// Configuracion.js - Funcionalidad específica de la página de configuración
-// NOTA: El header, dropdowns y notificaciones son manejados por catalogo-auth.js
+import { auth, db } from '../Modelo/firebase.js';
+import { doc, getDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { onAuthStateChanged, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Solo funcionalidad específica de la página de configuración
-    cargarDatosConfiguracion();
-    configurarNavegacionSidebar();
-    cargarPreferencias();
+// DOM Elements
+const elements = {
+    // Nav
+    navItems: document.querySelectorAll('.sidebar-item, .nav-item[data-section]'),
+    sections: document.querySelectorAll('.config-section'),
+    
+    // Cuenta Inputs
+    email: document.getElementById('config-email'),
+    tipo: document.getElementById('config-tipo'),
+    
+    // Buttons
+    btnCambiarPass: document.getElementById('btn-cambiar-pass')
+};
+
+let currentUser = null;
+let currentProfileData = null;
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        currentUser = user;
+        configurarNavegacionSidebar();
+        await cargarDatosConfiguracion(user.uid);
+        setupEventListeners();
+    } else {
+        window.location.href = 'login.html';
+    }
 });
 
-function cargarDatosConfiguracion() {
-    const usuario = localStorage.getItem('usuario_logueado');
-    if (usuario) {
-        const datos = JSON.parse(usuario);
+async function cargarDatosConfiguracion(uid) {
+    try {
+        const docRef = doc(db, 'usuarios', uid);
+        const docSnap = await getDoc(docRef);
         
-        const nombreInput = document.getElementById('config-nombre');
-        const emailInput = document.getElementById('config-email');
-        const telefonoInput = document.getElementById('config-telefono');
-        const direccionInput = document.getElementById('config-direccion');
+        if (docSnap.exists()) {
+            currentProfileData = docSnap.data();
+        } else {
+            currentProfileData = {
+                tipo: 'cliente',
+                email: currentUser.email || ''
+            };
+        }
         
-        if (nombreInput) nombreInput.value = datos.nombre || '';
-        if (emailInput) emailInput.value = datos.email || '';
-        if (telefonoInput) telefonoInput.value = datos.telefono || '';
-        if (direccionInput) direccionInput.value = datos.direccion || '';
+        llenarFormulario(currentProfileData);
+    } catch (error) {
+        console.error("Error cargando configuración:", error);
     }
 }
 
+function llenarFormulario(datos) {
+    if (elements.email) elements.email.value = currentUser.email || datos.email || '';
+    if (elements.tipo) elements.tipo.value = datos.tipo || 'Usuario Regular';
+}
+
 function configurarNavegacionSidebar() {
-    const navItems = document.querySelectorAll('.sidebar-item, .nav-item[data-section]');
-    const sections = document.querySelectorAll('.config-section');
-    
-    navItems.forEach(item => {
+    elements.navItems.forEach(item => {
         item.addEventListener('click', function(e) {
             const sectionId = this.getAttribute('data-section');
             if (!sectionId) return;
             
             e.preventDefault();
             
-            // Remover active de todos
-            navItems.forEach(nav => nav.classList.remove('active'));
-            sections.forEach(sec => sec.classList.remove('active'));
+            elements.navItems.forEach(nav => nav.classList.remove('active'));
+            elements.sections.forEach(sec => sec.classList.remove('active'));
             
-            // Activar actual
             this.classList.add('active');
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
@@ -50,118 +75,60 @@ function configurarNavegacionSidebar() {
     });
 }
 
-function cargarPreferencias() {
-    // Cargar estado
-    const estadoGuardado = localStorage.getItem('estado_usuario') || 'activo';
-    const estadoRadios = document.querySelectorAll('input[name="estado"]');
+function setupEventListeners() {
+    // La sección de Cuenta ya no se edita desde aquí, se edita desde Mi Perfil.
     
-    estadoRadios.forEach(radio => {
-        if (radio.value === estadoGuardado) {
-            radio.checked = true;
-        }
-        
-        radio.addEventListener('change', function() {
-            localStorage.setItem('estado_usuario', this.value);
-            mostrarToastConfig('Estado actualizado: ' + this.value);
-        });
-    });
-    
-    // Configurar radios de tema si existen
-    const temaRadios = document.querySelectorAll('input[name="tema"]');
-    const temaGuardado = localStorage.getItem('tema_servidom') || 'oscuro';
-    
-    temaRadios.forEach(radio => {
-        if (radio.value === temaGuardado) {
-            radio.checked = true;
-        }
-        
-        radio.addEventListener('change', function() {
-            if (typeof aplicarTema === 'function') {
-                aplicarTema(this.value);
+    if (elements.btnCambiarPass) {
+        elements.btnCambiarPass.addEventListener('click', async () => {
+            const currentPass = prompt("Ingresa tu contraseña actual:");
+            if (!currentPass) return;
+            
+            const newPass = prompt("Ingresa tu nueva contraseña:");
+            if (!newPass) return;
+            
+            try {
+                const credential = EmailAuthProvider.credential(currentUser.email, currentPass);
+                await reauthenticateWithCredential(currentUser, credential);
+                await updatePassword(currentUser, newPass);
+                mostrarToast("Contraseña actualizada exitosamente");
+            } catch (error) {
+                console.error(error);
+                mostrarToast("Error: Verifica tu contraseña actual e intenta de nuevo", "error");
             }
-            localStorage.setItem('tema_servidom', this.value);
-            mostrarToastConfig('Tema actualizado correctamente');
         });
-    });
-}
-
-function guardarCuenta() {
-    const nombre = document.getElementById('config-nombre')?.value;
-    const email = document.getElementById('config-email')?.value;
-    const telefono = document.getElementById('config-telefono')?.value;
-    const direccion = document.getElementById('config-direccion')?.value;
-    
-    const usuario = JSON.parse(localStorage.getItem('usuario_logueado')) || {};
-    usuario.nombre = nombre;
-    usuario.email = email;
-    usuario.telefono = telefono;
-    usuario.direccion = direccion;
-    
-    localStorage.setItem('usuario_logueado', JSON.stringify(usuario));
-    
-    // Actualizar nombre en header (catalogo-auth.js lo maneja)
-    const nombreUsuario = document.getElementById('nombre-usuario');
-    if (nombreUsuario) {
-        nombreUsuario.textContent = nombre || 'Usuario';
-    }
-    
-    mostrarToastConfig('Información guardada correctamente');
-}
-
-function desactivarCuenta() {
-    if (confirm('¿Estás seguro de que deseas desactivar tu cuenta? Podrás reactivarla iniciando sesión nuevamente.')) {
-        localStorage.setItem('estado_usuario', 'inactivo');
-        mostrarToastConfig('Cuenta desactivada');
     }
 }
 
-function eliminarCuenta() {
-    if (confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')) {
-        if (confirm('Esta es tu última oportunidad. ¿Realmente deseas eliminar tu cuenta permanentemente?')) {
-            localStorage.removeItem('usuario_logueado');
-            localStorage.removeItem('estado_usuario');
-            window.location.href = 'login.html';
-        }
-    }
-}
-
-function mostrarToastConfig(mensaje) {
-    // Usar la función de catalogo-auth.js si existe, sino crear una propia
-    if (typeof mostrarToast === 'function') {
-        mostrarToast(mensaje);
-        return;
-    }
-    
-    // Crear toast si no existe
-    let toast = document.getElementById('toast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'toast';
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 14px 28px;
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            z-index: 9999;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        `;
-        document.body.appendChild(toast);
-    }
-    
+// Re-usar Toast Function
+function mostrarToast(mensaje, tipo = "success") {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.backgroundColor = tipo === "error" ? '#ef4444' : '#10b981';
+    toast.style.color = 'white';
+    toast.style.padding = '12px 24px';
+    toast.style.borderRadius = '8px';
+    toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    toast.style.zIndex = '9999';
+    toast.style.fontFamily = 'Inter, sans-serif';
+    toast.style.fontSize = '14px';
+    toast.style.fontWeight = '500';
     toast.textContent = mensaje;
-    toast.style.opacity = '1';
-    toast.style.transform = 'translateX(-50%) translateY(0)';
+    
+    document.body.appendChild(toast);
+    
+    toast.animate([
+        { transform: 'translateY(100px)', opacity: 0 },
+        { transform: 'translateY(0)', opacity: 1 }
+    ], { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
     
     setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(100px)';
+        const animation = toast.animate([
+            { transform: 'translateY(0)', opacity: 1 },
+            { transform: 'translateY(100px)', opacity: 0 }
+        ], { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
+        
+        animation.onfinish = () => toast.remove();
     }, 3000);
 }

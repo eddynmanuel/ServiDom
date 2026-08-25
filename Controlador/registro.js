@@ -1,5 +1,5 @@
 import { auth, db } from '../Modelo/firebase.js';
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { createUserWithEmailAndPassword, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -71,9 +71,22 @@ async function registrarUsuario() {
 
     } catch (error) {
         console.error("Error al registrar:", error);
+        
+        // Si la autenticación tuvo éxito pero Firestore falló, borramos el usuario de Auth para evitar cuentas "a medias"
+        if (auth.currentUser && error.code !== 'auth/email-already-in-use') {
+            try {
+                await deleteUser(auth.currentUser);
+                console.log("Usuario de Auth eliminado (rollback) debido a falla en Firestore.");
+            } catch (rollbackError) {
+                console.error("No se pudo hacer rollback del usuario:", rollbackError);
+            }
+        }
+        
         let mensajeError = "Error al crear la cuenta.";
         if (error.code === 'auth/email-already-in-use') {
             mensajeError = "Este correo ya está registrado.";
+        } else if (error.code === 'permission-denied') {
+            mensajeError = "Error de permisos en la base de datos (Firestore Rules). Verifica que tu base de datos esté en modo prueba o permite escrituras.";
         }
         mostrarErrores(errorContainer, [mensajeError]);
     } finally {

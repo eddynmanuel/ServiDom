@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </button>
                         
                         <div class="dropdown-menu" id="dropdown" style="position: absolute; top: calc(100% + 12px); right: 0; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; padding: 8px 0; backdrop-filter: blur(12px);">
-                            <a href="perfil.html" class="dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: var(--text-primary); text-decoration: none; font-size: 14px; transition: background 0.2s;">
+                            <a href="perfil-personal.html" class="dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: var(--text-primary); text-decoration: none; font-size: 14px; transition: background 0.2s;">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; stroke: var(--text-secondary);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 <span>Mi Perfil</span>
                             </a>

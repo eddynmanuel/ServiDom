@@ -989,3 +989,54 @@
         flex-direction: column;
     }
 }
+/* Botones Adicionales */
+.btn-guardar, .btn-cancelar, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-guardar {
+    background: var(--gradient);
+    color: white;
+}
+
+.btn-guardar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-cancelar {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-cancelar:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+.btn-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-guardar svg, .btn-cancelar svg {
+    width: 18px;
+    height: 18px;
+}

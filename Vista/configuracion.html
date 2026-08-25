@@ -249,34 +249,28 @@
                         <p>Administra tu información personal y preferencias de cuenta</p>
                     </div>
                     
-                    <div class="config-card">
-                        <h3>Información personal</h3>
-                        <div class="form-group">
-                            <label>Nombre completo</label>
-                            <input type="text" id="config-nombre" value="Carlos García" placeholder="Tu nombre">
+                    <div class="config-card" id="config-cuenta-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <h3 style="margin: 0;">Detalles de la Cuenta</h3>
+                            <a href="perfil-personal.html" class="btn-secondary" style="text-decoration: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px; margin-right:6px; vertical-align:text-bottom;">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                                Editar en Mi Perfil
+                            </a>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Correo electrónico</label>
-                                <input type="email" id="config-email" value="carlos@ejemplo.com" placeholder="tu@email.com">
+                                <label>Correo electrónico (Usuario)</label>
+                                <input type="email" id="config-email" readonly disabled style="background: var(--bg-hover); opacity: 0.7;">
+                                <small style="color: var(--text-secondary); margin-top: 6px; display: block;">Este es el correo que utilizas para iniciar sesión.</small>
                             </div>
                             <div class="form-group">
-                                <label>Teléfono</label>
-                                <input type="tel" id="config-telefono" value="+51 999 888 777" placeholder="+51 999 888 777">
+                                <label>Tipo de Cuenta</label>
+                                <input type="text" id="config-tipo" readonly disabled style="background: var(--bg-hover); opacity: 0.7; text-transform: capitalize;">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Dirección</label>
-                            <input type="text" id="config-direccion" value="Av. Principal 123, Lima" placeholder="Tu dirección">
-                        </div>
-                        <button class="btn-guardar" onclick="guardarCuenta()">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                <polyline points="7 3 7 8 15 8"></polyline>
-                            </svg>
-                            Guardar cambios
-                        </button>
                     </div>
                     
                     <div class="config-card">
@@ -620,10 +614,10 @@
         </div>
     </main>
     
-    <script src="../Controlador/tema-global.js"></script>
-    <script src="../Controlador/catalogo.js"></script>
-    <script src="../Controlador/configuracion.js"></script>
+    <script src="../Controlador/tema-global.js?v=3"></script>
+    <script src="../Controlador/catalogo.js?v=3"></script>
+    <script type="module" src="../Controlador/configuracion.js?v=3"></script>
 
-    <script type="module" src="../Controlador/auth-state.js"></script>
+    <script type="module" src="../Controlador/auth-state.js?v=3"></script>
 </body>
 </html>
